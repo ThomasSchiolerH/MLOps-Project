@@ -1,47 +1,85 @@
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_squared_error
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.utils.data import DataLoader, random_split
 
-# Path to the processed dataset
-PROCESSED_FILE = "../../data/processed/HACKATHON.AVM_EJERLEJLIGHEDER_TRAIN.csv"
+from project_name.data import PriceDataset, FEATURE_COLUMNS
+from project_name.model import PricePredictionModel
 
-# Load the processed data
-data = pd.read_csv(PROCESSED_FILE)
+def train_model(
+    csv_path: str = "data/processed/HACKATHON.AVM_EJERLEJLIGHEDER_TRAIN.csv",
+    epochs: int = 5,
+    batch_size: int = 32,
+    lr: float = 1e-3,
+    train_split_ratio: float = 0.8,
+    random_seed: int = 42
+):
+    """
+    Train a simple feed-forward neural network, 
+    using an 80/20 train/validation split.
+    """
+    torch.manual_seed(random_seed)
 
-# Print the first few rows for debugging
-print("First 5 rows of the dataset:")
-print(data.head())
+    # 1. Create the full dataset (labeled data)
+    dataset = PriceDataset(csv_path=csv_path)
 
-# Drop rows with missing target values
-data = data.dropna(subset=["SQM_PRICE"])
+    # 2. Split dataset into train/val subsets
+    dataset_size = len(dataset)
+    train_size = int(train_split_ratio * dataset_size)
+    val_size = dataset_size - train_size
+    train_dataset, val_dataset = random_split(dataset, [train_size, val_size])
 
-# Fill or drop other missing values
-data = data.fillna(0)
+    print(f"Training samples: {len(train_dataset)}, Validation samples: {len(val_dataset)}")
 
-# Encode categorical variables (if any)
-# data["HAS_ELEVATOR"] = data["HAS_ELEVATOR"].astype(int)
+    # 3. Make DataLoaders
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+    val_loader = DataLoader(val_dataset,   batch_size=batch_size, shuffle=False)
 
-# Select features and target
-features = [
-    "AREA_TINGLYST", "AREA_RESIDENTIAL", "NUMBER_ROOMS", "DISTANCE_LAKE", "DISTANCE_HARBOUR", "DISTANCE_COAST","CONSTRUCTION_YEAR"
-]
-X = data[features]
-y = data["SQM_PRICE"]
+    # 4. Initialize model + optimizer
+    model = PricePredictionModel(in_features=len(FEATURE_COLUMNS))
+    criterion = nn.MSELoss()
+    optimizer = optim.Adam(model.parameters(), lr=lr)
 
-# Split data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    # 5. Training loop
+    for epoch in range(epochs):
+        model.train()
+        total_train_loss = 0.0
 
-# Initialize the model
-model = RandomForestRegressor(random_state=42)
+        for batch_x, batch_y in train_loader:
+            optimizer.zero_grad()
+            preds = model(batch_x)  # [batch_size, 1]
+            loss = criterion(preds.squeeze(), batch_y)
+            loss.backward()
+            optimizer.step()
+            total_train_loss += loss.item()
 
-# Train the model
-print("Training the model...")
-model.fit(X_train, y_train)
+        avg_train_loss = total_train_loss / len(train_loader)
 
-# Make predictions
-y_pred = model.predict(X_test)
+        # Validation for this epoch
+        model.eval()
+        total_val_loss = 0.0
+        with torch.no_grad():
+            for batch_x, batch_y in val_loader:
+                preds = model(batch_x)
+                loss = criterion(preds.squeeze(), batch_y)
+                total_val_loss += loss.item()
 
-# Evaluate the model
-mse = mean_squared_error(y_test, y_pred)
-print(f"Mean Squared Error: {mse}")
+        avg_val_loss = total_val_loss / len(val_loader)
+
+        print(f"Epoch [{epoch+1}/{epochs}] "
+              f"- Train Loss: {avg_train_loss:.4f} "
+              f"- Val Loss: {avg_val_loss:.4f}")
+
+    # 6. Final check on the validation set (optional, for clarity)
+    model.eval()
+    val_loss = 0.0
+    with torch.no_grad():
+        for batch_x, batch_y in val_loader:
+            preds = model(batch_x)
+            loss = criterion(preds.squeeze(), batch_y)
+            val_loss += loss.item()
+    final_val_loss = val_loss / len(val_loader)
+    print(f"Final validation MSE after {epochs} epochs: {final_val_loss:.4f}")
+
+    # Return the trained model so we can save it
+    return model

@@ -1,62 +1,81 @@
 from pathlib import Path
 import typer
-from torch.utils.data import Dataset
 import pandas as pd
+import torch
+from torch.utils.data import Dataset
+
+# Example: columns used for features
+FEATURE_COLUMNS = [
+    "AREA_TINGLYST",
+    "AREA_RESIDENTIAL",
+    "NUMBER_ROOMS",
+    "DISTANCE_LAKE",
+    "DISTANCE_HARBOUR",
+    "DISTANCE_COAST",
+    "CONSTRUCTION_YEAR",
+]
+TARGET_COLUMN = "SQM_PRICE"
 
 
-class MyDataset(Dataset):
-    """My custom dataset."""
+class PriceDataset(Dataset):
+    """
+    A custom PyTorch Dataset for apartment price data.
+    Returns (features, target) as torch.Tensors.
+    """
 
-    def __init__(self, raw_data_path: Path) -> None:
-        self.data_path = raw_data_path
-        print(f"Loading data from: {self.data_path}")
-        self.data = pd.read_csv(self.data_path)
+    def __init__(self, csv_path: Path, train: bool = True) -> None:
+        """
+        :param csv_path: Path to the CSV file.
+        :param train: Flag indicating if this is a training or test dataset.
+                      You might handle different logic or transforms based on this.
+        """
+        self.csv_path = csv_path
+        print(f"Loading data from: {self.csv_path}")
+        self.data = pd.read_csv(self.csv_path)
 
-        # Debug: Print the first few rows of the dataset
-        print("Dataset loaded successfully. First 5 rows:")
+        # Example minimal preprocessing
+        # Drop rows missing the target, fill other NAs with 0
+        self.data = self.data.dropna(subset=[TARGET_COLUMN]).fillna(0)
+
+        # Basic debugging info
+        print("Dataset loaded. First 5 rows:")
         print(self.data.head())
+
+        # Convert feature columns to float
+        self.features = self.data[FEATURE_COLUMNS].values.astype("float32")
+
+        # Convert target column to float
+        self.targets = self.data[TARGET_COLUMN].values.astype("float32")
 
     def __len__(self) -> int:
         """Return the length of the dataset."""
-        length = len(self.data)
-        print("Length of the dataset: ", length)
-        return length
+        return len(self.data)
 
-    def __getitem__(self, index: int):
-        """Return a given sample from the dataset."""
-        sample = self.data.iloc[index]
-        print(f"Sample at index {index}:")
-        print(sample)
-        return sample
-
-    def preprocess(self, output_folder: Path) -> None:
-        """Preprocess the raw data and save it to the output folder."""
-        print("Starting preprocessing...")
-        
-        # Example preprocessing: Drop rows with null values in specific columns
-        processed_data = self.data.dropna(subset=["PRICE", "SQM_PRICE"])
-
-        # Debug: Print the first few rows of the processed dataset
-        print("Processed dataset (first 5 rows):")
-        print(processed_data.head())
-
-        # Save the processed data to the output folder
-        output_path = output_folder / self.data_path.name
-        processed_data.to_csv(output_path, index=False)
-        print(f"Processed data saved to: {output_path}")
+    def __getitem__(self, idx: int):
+        """
+        Return (features, target) as torch Tensors.
+        """
+        x = torch.tensor(self.features[idx])
+        y = torch.tensor(self.targets[idx])
+        return x, y
 
 
 def preprocess(raw_data_path: Path, output_folder: Path) -> None:
-    print("Preprocessing data...")
-    dataset = MyDataset(raw_data_path)
+    """
+    A placeholder function illustrating a data preprocessing step.
+    This could be more elaborate (imputations, data cleaning, etc.).
+    """
+    print("Starting data preprocessing...")
+    df = pd.read_csv(raw_data_path)
 
-    # Debug: Print dataset length
-    print(f"Dataset length: {len(dataset)}")
+    # Example: Drop rows with null in crucial columns
+    df = df.dropna(subset=["PRICE", "SQM_PRICE"])
+    # Optionally fill other columns
+    df = df.fillna(0)
 
-    # Optional: Retrieve a specific sample for debugging
-    _ = dataset.__getitem__(0)  # Retrieve the first sample
-
-    dataset.preprocess(output_folder)
+    output_path = output_folder / raw_data_path.name
+    df.to_csv(output_path, index=False)
+    print(f"Processed CSV saved to: {output_path}")
 
 
 if __name__ == "__main__":
