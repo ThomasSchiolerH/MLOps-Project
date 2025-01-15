@@ -1,5 +1,3 @@
-# src/project_name/main.py
-
 import typer
 import torch
 from pathlib import Path
@@ -12,8 +10,8 @@ app = typer.Typer()
 
 @app.command()
 def data_preprocess(
-    raw_data_path: str = "data/raw/HACKATHON.AVM_EJERLEJLIGHEDER_TRAIN.csv",
-    output_folder: str = "data/processed"
+    raw_data_path: str = "../data/raw/HACKATHON.AVM_EJERLEJLIGHEDER_TRAIN.csv",
+    output_folder: str = "../data/processed"
 ):
     """
     Run a simple data preprocessing step to output a clean CSV.
@@ -22,17 +20,20 @@ def data_preprocess(
 
 @app.command()
 def train(
-    processed_file: str = "data/processed/HACKATHON.AVM_EJERLEJLIGHEDER_TRAIN.csv",
+    train_csv: str = "../data/processed/train_processed.csv",
+    val_csv: str = "../data/processed/val_processed.csv",
     epochs: int = 5,
     batch_size: int = 32,
     lr: float = 1e-3,
-    model_output: str = "models/price_model.pth"
+    model_output: str = "../models/price_model.pth"
 ):
     """
-    Train a simple PyTorch feed-forward model.
+    Train a simple PyTorch feed-forward model using 
+    the preprocessed train and validation CSVs.
     """
     model = train_model(
-        csv_path=processed_file, 
+        train_csv=train_csv,
+        val_csv=val_csv,
         epochs=epochs,
         batch_size=batch_size,
         lr=lr
