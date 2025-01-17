@@ -29,6 +29,7 @@ DROP_COLUMNS = [
     "UNIT_ID",
     "BUILDING_ID",
     "STREET_CODE",
+    "PRICE",
 ]
 FEATURE_COLUMNS = [
     "FLOOR",
