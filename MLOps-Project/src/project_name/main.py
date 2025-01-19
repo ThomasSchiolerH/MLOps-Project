@@ -43,14 +43,13 @@ def train(
 
 @app.command()
 def evaluate(
-    model_checkpoint: str = "models/price_model.pth",
-    test_file: str = "data/raw/HACKATHON.AVM_EJERLEJLIGHEDER_TEST.csv"
+    model_checkpoint: str = "../models/price_model.pth",
+    test_file: str = "../data/processed/test_processed.csv"
 ):
     """
     Evaluate the trained model on a test dataset (MSE).
     """
-    mse = evaluate_model(model_checkpoint, test_file)
-    print(f"Final test MSE: {mse:.4f}")
+    evaluate_model(model_checkpoint, test_file)
 
 if __name__ == "__main__":
     app()
