@@ -78,15 +78,13 @@ def transform_floor(x: str) -> int:
 def facility_clean(text: str) -> float:
     """
     Convert facility strings to 1 if not NaN, else 0.
-    If you want more nuanced parsing (like "T:" -> toilet),
-    you'd do that here. For now, just check notnull -> 1.
     """
     return float(pd.notna(text))
 
 def groupby_mean_impute(df: pd.DataFrame, groupby_col: str, impute_col: str) -> pd.DataFrame:
     """
     For each group in `groupby_col`, fill the missing values in `impute_col` 
-    with the group's mean. e.g. groupby ZIP_CODE => fill means per ZIP group.
+    with the group's mean. 
     """
     df[impute_col] = df[impute_col].astype(float)
     df[impute_col] = df.groupby(groupby_col)[impute_col].transform(lambda x: x.fillna(x.mean()))
@@ -98,7 +96,7 @@ def handle_missing_values(df: pd.DataFrame) -> pd.DataFrame:
       1) groupby_mean_impute for FLOOR, CONSTRUCTION_YEAR by ZIP_CODE
       2) if REBUILDING_YEAR is missing, set it to CONSTRUCTION_YEAR
       3) fill area columns with 0
-      4) (NEW) fallback fill for any remaining NaNs
+      4) fallback fill for any remaining NaNs
     """
     # 1) Group-based imputations
     if "ZIP_CODE" in df.columns:
@@ -117,11 +115,9 @@ def handle_missing_values(df: pd.DataFrame) -> pd.DataFrame:
         df[AREA_COLUMNS] = df[AREA_COLUMNS].fillna(0)
 
     # 4) Fallback fill for any remaining NaNs
-    #    If you still want a numeric ZIP_CODE, you could set them to -1:
     if "ZIP_CODE" in df.columns:
         df["ZIP_CODE"] = df["ZIP_CODE"].fillna(-1)
 
-    #    Then fill numeric columns (e.g. FLOOR, CONSTRUCTION_YEAR, REBUILDING_YEAR) with their global means:
     if "FLOOR" in df.columns:
         df["FLOOR"].fillna(df["FLOOR"].mean(), inplace=True)
 
@@ -133,9 +129,6 @@ def handle_missing_values(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
-
-
-
 # -------------------------------------------------------------------
 # 2) FEATURE ENGINEERING
 # -------------------------------------------------------------------
@@ -145,7 +138,7 @@ def feature_engineering(df: pd.DataFrame, log_transform: bool = False) -> pd.Dat
     2) Convert floor
     3) Convert facility columns to booleans
     4) Convert HAS_ELEVATOR to float
-    5) Handle missing values via groupby mean, area fill
+    5) Handle missing values
     6) (Optional) Log transform target
     """
     # --- 1) Parse date ---
@@ -163,7 +156,6 @@ def feature_engineering(df: pd.DataFrame, log_transform: bool = False) -> pd.Dat
         df["FLOOR"] = 0.0
 
     # --- 3) Facility columns -> booleans ---
-    # (or just notna() if your raw data means "string" => has facility)
     df["HAS_TOILET"] = df["FACILITIES_TOILET"].apply(facility_clean)
     df["HAS_SHOWER"] = df["FACILITIES_SHOWER"].apply(facility_clean)
     df["HAS_KITCHEN"] = df["FACILITIES_KITCHEN"].apply(facility_clean)
@@ -175,7 +167,7 @@ def feature_engineering(df: pd.DataFrame, log_transform: bool = False) -> pd.Dat
     else:
         df["HAS_ELEVATOR"] = 0.0
 
-    # --- 5) Missing values handling (groupby mean, fill area, etc.) ---
+    # --- 5) Missing values handling ---
     df = handle_missing_values(df)
 
     # --- 6) (Optional) Log transform the target (SQM_PRICE) ---
@@ -184,25 +176,28 @@ def feature_engineering(df: pd.DataFrame, log_transform: bool = False) -> pd.Dat
 
     return df
 
-
 # -------------------------------------------------------------------
-# 3) PREPROCESS PIPELINE
+# 3) PREPROCESS PIPELINE (NOW WITH TRAIN/VAL/TEST SPLIT)
 # -------------------------------------------------------------------
 def preprocess(
     raw_data_path: Path,
     output_folder: Path,
-    test_size: float = 0.2,
+    test_size: float = 0.15,       # e.g., 15% of the entire dataset for test
     random_state: int = 42,
     do_log_transform: bool = False
 ) -> None:
     """
     1) Load raw CSV
     2) Drop rows missing crucial 'PRICE' / 'SQM_PRICE'
-    3) feature_engineering (floor, facility, date, handle missing)
+    3) Feature engineering
     4) Drop columns in DROP_COLUMNS
-    5) Split (train/val)
-    6) Scale numeric features
-    7) Save train_processed.csv, val_processed.csv, scaler.pkl
+    5) Two-stage split:
+       - First: (temp_df, test_df) with test_size fraction
+       - Second: (train_df, val_df) from temp_df, 
+         so val is ~ the same fraction as test (to get train/val/test).
+    6) Scale numeric features using StandardScaler (fit on train only).
+    7) Save train_processed.csv, val_processed.csv, test_processed.csv
+    8) Save scaler.pkl
     """
     print("Starting data preprocessing...")
     df = pd.read_csv(raw_data_path)
@@ -219,11 +214,20 @@ def preprocess(
         if col in df.columns:
             df.drop(col, axis=1, inplace=True, errors="ignore")
 
-    # 4) Split into train / val
-    train_df, val_df = train_test_split(df, test_size=test_size, random_state=random_state)
-    print(f"Train shape: {train_df.shape}, Val shape: {val_df.shape}")
+    # 4) Split into temp & test first
+    #    e.g., if test_size=0.15 => 15% test, 85% temp
+    temp_df, test_df = train_test_split(df, test_size=test_size, random_state=random_state)
+    print(f"Temp shape: {temp_df.shape}, Test shape: {test_df.shape}")
 
-    # 5) Scale numeric columns
+    # Now, from temp_df, we want to pull out val_df of the same fraction
+    # that test was from the full dataset. If test_size=0.15, that means
+    # we want val_size ~0.15 / 0.85 => ~0.176 of the temp_df
+    val_ratio = test_size / (1.0 - test_size)
+
+    train_df, val_df = train_test_split(temp_df, test_size=val_ratio, random_state=random_state)
+    print(f"Train shape: {train_df.shape}, Val shape: {val_df.shape}, Test shape: {test_df.shape}")
+
+    # 5) Scale numeric columns (fit on train only)
     numeric_cols_to_scale = []
     for col in FEATURE_COLUMNS:
         if col in train_df.columns and pd.api.types.is_numeric_dtype(train_df[col]):
@@ -234,22 +238,28 @@ def preprocess(
 
     train_df[numeric_cols_to_scale] = scaler.transform(train_df[numeric_cols_to_scale])
     val_df[numeric_cols_to_scale]   = scaler.transform(val_df[numeric_cols_to_scale])
+    test_df[numeric_cols_to_scale]  = scaler.transform(test_df[numeric_cols_to_scale])
 
     # 6) Save outputs
     output_folder.mkdir(parents=True, exist_ok=True)
     train_out = output_folder / "train_processed.csv"
     val_out   = output_folder / "val_processed.csv"
+    test_out  = output_folder / "test_processed.csv"
+
     train_df.to_csv(train_out, index=False)
     val_df.to_csv(val_out, index=False)
+    test_df.to_csv(test_out, index=False)
+
     print(f"Saved train to: {train_out}")
     print(f"Saved val to:   {val_out}")
+    print(f"Saved test to:  {test_out}")
 
+    # 7) Save scaler
     scaler_path = output_folder / "scaler.pkl"
     joblib.dump(scaler, scaler_path)
     print(f"Scaler saved to: {scaler_path}")
 
     print("Preprocessing complete.")
-
 
 # -------------------------------------------------------------------
 # 4) PRICE DATASET
@@ -275,6 +285,7 @@ class PriceDataset(Dataset):
         else:
             self.targets = None
 
+        # Ensure all expected features exist; fill missing with 0 if needed
         for col in FEATURE_COLUMNS:
             if col not in self.data.columns:
                 print(f"Warning: Feature '{col}' not found, filling with 0.")
