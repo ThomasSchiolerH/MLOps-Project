@@ -212,7 +212,7 @@ will check the repositories and the code to verify your answers.
 > *application but also ... .*
 >
 > Answer:
-> In total, we have implemented 4 tests. Primarily, we are testing the model's ability to load correctly and produce >valid predictions, which are critical for ensuring consistent performance. Additionally, we have implemented tests for > data pipeline integrity to verify correct preprocessing and data loading. Finally, we have added tests to validate the > accuracy metric calculations to ensure they meet the defined criteria for evaluating predictions within differerent > error margins.
+In total, we have implemented 4 tests. Primarily, we are testing the model's ability to load correctly and produce valid predictions, which are critical for ensuring consistent performance. Additionally, we have implemented tests for data pipeline integrity to verify correct preprocessing and data loading. Finally, we have added tests to validate the accuracy metric calculations to ensure they meet the defined criteria for evaluating predictions within different error margins.
 
 --- question 7 fill here ---
 
