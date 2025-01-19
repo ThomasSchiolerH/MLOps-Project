@@ -1,8 +1,8 @@
 import torch
 import pytest
-from project_name.model import PricePredictionModel
-from project_name.data import PriceDataset, FEATURE_COLUMNS
-from project_name.evaluate import evaluate_model
+from src.AVM.model import PricePredictionModel
+from src.AVM.data import PriceDataset, FEATURE_COLUMNS
+
 # Test model loading
 def test_model_loading():
     model = PricePredictionModel(in_features=len(FEATURE_COLUMNS))

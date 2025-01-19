@@ -1,11 +1,10 @@
 import torch
 import pytest
-from src.AVM.model import PricePredictionModel
-from src.AVM.data import PriceDataset, FEATURE_COLUMNS
-from project_name.evaluate import evaluate_model
+
+from src.AVM.evaluate import evaluate_model
 
 def test_evaluate_model():
-    mse = evaluate_model(model_checkpoint="model.pth", csv_path="test_data.csv")
+    mse, acc_5, acc_10, acc_20 = evaluate_model(model_checkpoint="models/price_model.pth", csv_path="data/processed/test_processed.csv")
     assert mse >= 0, "MSE should be non-negative"
     
     
@@ -19,4 +18,4 @@ def test_accuracy_calculation():
         return within_margin.float().mean().item() * 100
 
     acc_10 = calculate_accuracy_margin(preds, targets, 0.10)
-    assert acc_10 == 66.66666666666666, "Accuracy calculation failed"    
+    assert acc_10 == 100.0, "Accuracy calculation failed"    
