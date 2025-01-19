@@ -229,7 +229,11 @@ In total, we have implemented 4 tests. Primarily, we are testing the model's abi
 >
 > Answer:
 
---- question 8 fill here ---
+The total code coverage of our project is 47%, covering key modules such as data processing, model evaluation, and model architecture. While achieving 100% code coverage would indicate that all lines of code are executed during tests, it does not guarantee that the code is free from errors. Code coverage only measures execution, not correctness; untested edge cases, unexpected inputs, and logical flaws may still exist.
+
+Even if our code had close to 100% coverage, we would not fully trust it to be error-free. High coverage ensures that tests exercise most parts of the code, but the quality of tests—such as checking boundary conditions, handling unexpected scenarios, and testing business logic—is equally important. Comprehensive testing strategies, including unit tests, integration tests, and exploratory testing, are crucial to ensure robustness and reliability in production.
+
+Thus, while our current coverage indicates room for improvement, increasing test coverage with well-thought-out tests will help us build confidence in our system's reliability and correctness.
 
 ### Question 9
 
