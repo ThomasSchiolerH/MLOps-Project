@@ -18,7 +18,7 @@ def evaluate_model(model_checkpoint: str, csv_path: str) -> float:
     model.eval()
 
     # Create dataset and DataLoader
-    dataset = PriceDataset(csv_path=csv_path, train=False)
+    dataset = PriceDataset(csv_path=csv_path, train=True)
     data_loader = DataLoader(dataset, batch_size=32, shuffle=False)
 
     criterion = nn.MSELoss()
