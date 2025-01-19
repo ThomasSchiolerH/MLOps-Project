@@ -268,7 +268,12 @@ Using branches and PRs improved collaboration by reducing conflicts, enabling pa
 >
 > Answer:
 
---- question 10 fill here ---
+No, we did not use DVC in our project. During the lectures, we were informed that we should wait before implementing it, and due to some issues, we never started using it. However, we recognize the potential benefits that DVC could have provided in managing our data effectively.
+
+Having version control for data would be beneficial in scenarios where datasets evolve over time, such as when new data is collected, or preprocessing techniques change. DVC allows tracking changes in data similarly to how Git tracks code, ensuring reproducibility and collaboration across different versions of the dataset. This would help avoid inconsistencies, enable rollback to previous data states, and provide a clear audit trail of modifications.
+
+In a machine learning pipeline, using DVC could have helped us streamline data management, avoid storing large files directly in the repository, and ensure that everyone on the team was working with the same version of the dataset. Moving forward, adopting DVC would improve our project's scalability and maintainability by integrating data versioning into our workflow.
+
 
 ### Question 11
 
