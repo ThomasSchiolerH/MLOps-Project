@@ -247,7 +247,13 @@ Thus, while our current coverage indicates room for improvement, increasing test
 >
 > Answer:
 
---- question 9 fill here ---
+Yes, our workflow included using branches and pull requests to manage version control effectively. Each team member worked on separate feature branches based on the main branch to ensure an organized and collaborative development process. This approach allowed us to isolate new features, bug fixes, and experiments without affecting the stable codebase.
+
+Once a feature or fix was completed, a pull request (PR) was created to merge changes into the main branch. PRs provided an opportunity for code review, where other team members could provide feedback, suggest improvements, and catch potential issues before merging. This process helped maintain code quality, enforce best practices, and ensure that new changes were well-tested and documented.
+
+Using branches and PRs improved collaboration by reducing conflicts, enabling parallel development, and maintaining a clean and structured commit history. It also allowed us to revert changes easily if issues were detected after merging. Overall, this workflow played a crucial role in maintaining the stability and reliability of our project.
+
+
 
 ### Question 10
 
