@@ -3,9 +3,9 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "project_name"
+name = "AVM"
 version = "0.0.1"
-description = "Model to evaluate housing prices (DK)"
+description = "Model to evaluate housing prices (DK) AVM - Automated Valuation Model"
 authors = [
   { name = "Thomas/Victor/Jakob", email = "your@email.com" },
 ]

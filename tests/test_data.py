@@ -1,6 +1,6 @@
 import torch
 import pytest
-from src.project_name.data import PriceDataset, FEATURE_COLUMNS
+from src.AVM.data import PriceDataset, FEATURE_COLUMNS
 
 # Test data loading
 def test_data_loading():

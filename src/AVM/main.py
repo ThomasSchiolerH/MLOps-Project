@@ -2,9 +2,9 @@ import typer
 import torch
 from pathlib import Path
 
-from project_name.data import preprocess
-from project_name.train import train_model
-from project_name.evaluate import evaluate_model
+from AVM.data import preprocess
+from AVM.train import train_model
+from AVM.evaluate import evaluate_model
 
 app = typer.Typer()
 

@@ -3,8 +3,8 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader
 
-from project_name.data import PriceDataset, FEATURE_COLUMNS
-from project_name.model import PricePredictionModel
+from AVM.data import PriceDataset, FEATURE_COLUMNS
+from AVM.model import PricePredictionModel
 
 def train_model(
     train_csv: str = "../../data/processed/train_processed.csv",

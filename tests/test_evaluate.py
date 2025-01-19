@@ -1,7 +1,7 @@
 import torch
 import pytest
-from src.project_name.model import PricePredictionModel
-from src.project_name.data import PriceDataset, FEATURE_COLUMNS
+from src.AVM.model import PricePredictionModel
+from src.AVM.data import PriceDataset, FEATURE_COLUMNS
 from project_name.evaluate import evaluate_model
 
 def test_evaluate_model():
