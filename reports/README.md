@@ -212,8 +212,8 @@ will check the repositories and the code to verify your answers.
 > *application but also ... .*
 >
 > Answer:
+In total, we have implemented 4 tests. Primarily, we are testing the model's ability to load correctly and produce valid predictions, which are critical for ensuring consistent performance. Additionally, we have implemented tests for data pipeline integrity to verify correct preprocessing and data loading. Finally, we have added tests to validate the accuracy metric calculations to ensure they meet the defined criteria for evaluating predictions within different error margins.
 
---- question 7 fill here ---
 
 ### Question 8
 
@@ -228,7 +228,11 @@ will check the repositories and the code to verify your answers.
 >
 > Answer:
 
---- question 8 fill here ---
+The total code coverage of our project is 47%, covering key modules such as data processing, model evaluation, and model architecture. While achieving 100% code coverage would indicate that all lines of code are executed during tests, it does not guarantee that the code is free from errors. Code coverage only measures execution, not correctness; untested edge cases, unexpected inputs, and logical flaws may still exist.
+
+Even if our code had close to 100% coverage, we would not fully trust it to be error-free. High coverage ensures that tests exercise most parts of the code, but the quality of tests—such as checking boundary conditions, handling unexpected scenarios, and testing business logic—is equally important. Comprehensive testing strategies, including unit tests, integration tests, and exploratory testing, are crucial to ensure robustness and reliability in production.
+
+Thus, while our current coverage indicates room for improvement, increasing test coverage with well-thought-out tests will help us build confidence in our system's reliability and correctness.
 
 ### Question 9
 
@@ -243,7 +247,13 @@ will check the repositories and the code to verify your answers.
 >
 > Answer:
 
---- question 9 fill here ---
+Yes, our workflow included using branches and pull requests to manage version control effectively. Each team member worked on separate feature branches based on the main branch to ensure an organized and collaborative development process. This approach allowed us to isolate new features, bug fixes, and experiments without affecting the stable codebase.
+
+Once a feature or fix was completed, a pull request (PR) was created to merge changes into the main branch. PRs provided an opportunity for code review, where other team members could provide feedback, suggest improvements, and catch potential issues before merging. This process helped maintain code quality, enforce best practices, and ensure that new changes were well-tested and documented.
+
+Using branches and PRs improved collaboration by reducing conflicts, enabling parallel development, and maintaining a clean and structured commit history. It also allowed us to revert changes easily if issues were detected after merging. Overall, this workflow played a crucial role in maintaining the stability and reliability of our project.
+
+
 
 ### Question 10
 
@@ -258,7 +268,12 @@ will check the repositories and the code to verify your answers.
 >
 > Answer:
 
---- question 10 fill here ---
+No, we did not use DVC in our project. During the lectures, we were informed that we should wait before implementing it, and due to some issues, we never started using it. However, we recognize the potential benefits that DVC could have provided in managing our data effectively.
+
+Having version control for data would be beneficial in scenarios where datasets evolve over time, such as when new data is collected, or preprocessing techniques change. DVC allows tracking changes in data similarly to how Git tracks code, ensuring reproducibility and collaboration across different versions of the dataset. This would help avoid inconsistencies, enable rollback to previous data states, and provide a clear audit trail of modifications.
+
+In a machine learning pipeline, using DVC could have helped us streamline data management, avoid storing large files directly in the repository, and ensure that everyone on the team was working with the same version of the dataset. Moving forward, adopting DVC would improve our project's scalability and maintainability by integrating data versioning into our workflow.
+
 
 ### Question 11
 
