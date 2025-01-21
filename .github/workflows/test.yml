@@ -25,7 +25,6 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           cache: 'pip'
-          cache-dependency-path: setup.py
 
       - name: Install dependencies
         run: |
@@ -34,6 +33,31 @@ jobs:
           pip install -r requirements-dev.txt
           pip list
 
+      - name: Authenticate with Google Cloud
+        run: |
+          echo "${{ secrets.GCLOUD_SERVICE_KEY }}" > gcloud-key.json
+          gcloud auth activate-service-account --key-file=gcloud-key.json
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: gcloud-key.json
+
+      - name: Download required files
+        run: |
+          mkdir -p data/processed
+          mkdir -p models
+
+          if [ ! -f data/processed/test_processed.csv ]; then
+            echo "Downloading test_processed.csv..."
+            gsutil cp gs://<your-bucket-name>/data/processed/test_processed.csv data/processed/test_processed.csv
+          else
+            echo "File data/processed/test_processed.csv already exists. Skipping download."
+          fi
+
+          if [ ! -f models/price_model.pth ]; then
+            echo "Downloading price_model.pth..."
+            gsutil cp gs://<your-bucket-name>/models/price_model.pth models/price_model.pth
+          else
+            echo "File models/price_model.pth already exists. Skipping download."
+          fi
 
       - name: Run tests & coverage
         run: |
