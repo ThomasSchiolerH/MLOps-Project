@@ -29,3 +29,8 @@ jobs:
       - name: Run Ruff
         run: |
           ruff check src tests
+    
+      - name: Run Ruff with Auto-Fix
+        run: |
+          ruff check src tests --fix
+        
