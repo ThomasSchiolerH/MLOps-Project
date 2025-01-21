@@ -1,3 +1,7 @@
+# Ignore all .csv files in data/processed/ and data/raw/
 data/processed/*.csv
-
 data/raw/*.csv
+
+# Allow .gitkeep files
+!data/processed/.gitkeep
+!data/raw/.gitkeep
