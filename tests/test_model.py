@@ -1,7 +1,5 @@
-import torch
-import pytest
 from src.AVM.model import PricePredictionModel
-from src.AVM.data import PriceDataset, FEATURE_COLUMNS
+from src.AVM.data import FEATURE_COLUMNS
 
 # Test model loading
 def test_model_loading():

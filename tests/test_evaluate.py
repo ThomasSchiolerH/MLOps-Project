@@ -1,12 +1,11 @@
 import torch
-import pytest
-
 from src.AVM.evaluate import evaluate_model
 
 def test_evaluate_model():
-    mse, acc_5, acc_10, acc_20 = evaluate_model(model_checkpoint="models/price_model.pth", csv_path="data/processed/test_processed.csv")
+    mse, acc_5, acc_10, acc_20 = evaluate_model(
+        model_checkpoint="models/price_model.pth", 
+        csv_path="data/processed/test_processed.csv")
     assert mse >= 0, "MSE should be non-negative"
-    
     
 # Test accuracy metric calculation
 def test_accuracy_calculation():

@@ -1,5 +1,3 @@
-import torch
-import pytest
 from src.AVM.data import PriceDataset, FEATURE_COLUMNS
 
 # Test data loading
