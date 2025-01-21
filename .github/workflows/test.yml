@@ -13,7 +13,7 @@ jobs:
     runs-on: ${{ matrix.operating-system }}
     strategy:
       matrix:
-        operating-system: ["ubuntu-latest"]
+        operating-system: ["ubuntu-latest", "macos-latest"]
         python-version: ["3.12", "3.11"]
 
     steps:
@@ -31,42 +31,16 @@ jobs:
           python -m pip install -U pip setuptools wheel
           pip install -r requirements.txt
           pip install -r requirements-dev.txt
-          pip list
 
-      - name: Install gcloud CLI
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y apt-transport-https ca-certificates gnupg curl
-          curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
-          echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee /etc/apt/sources.list.d/google-cloud-sdk.list
-          sudo apt-get update
-          sudo apt-get install -y google-cloud-sdk
+      - name: Set up DVC
+        uses: iterative/setup-dvc@v1
 
-      - name: Authenticate with Google Cloud
-        run: |
-          echo "${{ secrets.GCLOUD_SERVICE_KEY }}" > gcloud-key.json
-          gcloud auth activate-service-account --key-file=gcloud-key.json
+      - name: Pull data with DVC
         env:
           GOOGLE_APPLICATION_CREDENTIALS: gcloud-key.json
-
-      - name: Download required files
         run: |
-          mkdir -p data/processed
-          mkdir -p models
-
-          if [ ! -f data/processed/test_processed.csv ]; then
-            echo "Downloading test_processed.csv..."
-            gsutil cp gs://AVM-MLOps/data/processed/test_processed.csv data/processed/test_processed.csv
-          else
-            echo "File data/processed/test_processed.csv already exists. Skipping download."
-          fi
-
-          if [ ! -f models/price_model.pth ]; then
-            echo "Downloading price_model.pth..."
-            gsutil cp gs://AVM-MLOps/models/price_model.pth models/price_model.pth
-          else
-            echo "File models/price_model.pth already exists. Skipping download."
-          fi
+          echo "${{ secrets.GDRIVE_CREDENTIALS_DATA }}" > gcloud-key.json
+          dvc pull
 
       - name: Run tests & coverage
         run: |
