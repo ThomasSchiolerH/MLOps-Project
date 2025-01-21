@@ -1,17 +1,20 @@
-# Base image
-FROM python:3.11-slim AS base
+# Use an official PyTorch image as base (CPU version for now)
+#FROM pytorch/pytorch:latest
+FROM python:3.11-slim
 
-RUN apt update && \
-    apt install --no-install-recommends -y build-essential gcc && \
-    apt clean && rm -rf /var/lib/apt/lists/*
+# Set the working directory inside the container
+WORKDIR /app
 
-COPY src src/
+# Copy requirements and install dependencies
 COPY requirements.txt requirements.txt
-COPY requirements_dev.txt requirements_dev.txt
-COPY README.md README.md
-COPY pyproject.toml pyproject.toml
+RUN pip install --no-cache-dir -r requirements.txt
 
-RUN pip install -r requirements.txt --no-cache-dir --verbose
-RUN pip install . --no-deps --no-cache-dir --verbose
+# Copy the entire project into the container
+COPY src /app/src
 
-ENTRYPOINT ["python", "-u", "src/project_name/train.py"]
+
+# Set environment variables (optional)
+ENV PYTHONUNBUFFERED=1
+
+# Default command to run the training script
+CMD ["python", "src/AVM/main.py", "train"]

@@ -10,4 +10,11 @@ scipy==1.15.1
 threadpoolctl==3.5.0
 pytest===8.3.4
 coverage===7.6.10
-PyYAML
+google-cloud
+google-cloud-storage
+google-cloud-aiplatform
+google-auth
+#fastapi
+#uvicorn
+#PyYAML
+#python-multipart
