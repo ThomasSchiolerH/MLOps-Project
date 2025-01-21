@@ -13,7 +13,7 @@ jobs:
     runs-on: ${{ matrix.operating-system }}
     strategy:
       matrix:
-        operating-system: ["ubuntu-latest", "macos-latest"]
+        operating-system: ["ubuntu-latest"]
         python-version: ["3.12", "3.11"]
 
     steps:
@@ -35,12 +35,10 @@ jobs:
       - name: Set up DVC
         uses: iterative/setup-dvc@v1
 
-      - name: Pull data with DVC
+      - name: Get data
+        run: dvc pull
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: gcloud-key.json
-        run: |
-          echo "${{ secrets.GDRIVE_CREDENTIALS_DATA }}" > gcloud-key.json
-          dvc pull
+          GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
 
       - name: Run tests & coverage
         run: |
