@@ -26,9 +26,17 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: 'pip'
 
+      - name: Cache DVC Data
+        uses: actions/cache@v3
+        with:
+          path: .dvc/cache
+          key: dvc-${{ matrix.python-version }}-${{ hashFiles('.dvc/config') }}
+          restore-keys: |
+            dvc-${{ matrix.python-version }}-
+
       - name: Install dependencies
         run: |
-          python -m pip install -U pip setuptools wheel
+          python -m pip install --upgrade pip setuptools wheel
           pip install -r requirements.txt
           pip install -r requirements-dev.txt
 
