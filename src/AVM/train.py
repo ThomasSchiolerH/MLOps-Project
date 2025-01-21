@@ -1,8 +1,8 @@
 import yaml
 import argparse
 import torch
-from AVM.data import PriceDataset, FEATURE_COLUMNS
-from AVM.model import PricePredictionModel
+from src.AVM.data import PriceDataset, FEATURE_COLUMNS
+from src.AVM.model import PricePredictionModel
 
 def load_config(config_path: str, config_name: str):
     with open(config_path, 'r') as file:

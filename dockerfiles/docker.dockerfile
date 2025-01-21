@@ -9,8 +9,5 @@ COPY . .
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Set the working directory to `src` for command execution
-WORKDIR /app/src
-
 # Default command (can be overridden when running the container)
-CMD ["python", "-m", "AVM.main"]
+CMD ["python", "-m", "src.AVM.main", "evaluate", "--model-checkpoint", "models/price_model.pth", "--test-file", "data/processed/test_processed.csv"]
