@@ -1,0 +1,32 @@
+name: Code Quality
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+
+      - name: Install Ruff
+        run: |
+          python -m pip install -U pip setuptools wheel
+          pip install ruff
+
+      - name: Run Ruff with Auto-Fix
+        run: |
+          ruff check src tests --fix
+        
