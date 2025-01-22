@@ -1,27 +1,27 @@
 train_configs:
   baseline:
-    train_csv: "../../data/processed/train_processed.csv"
-    val_csv: "../../data/processed/val_processed.csv"
+    train_csv: "data/processed/train_processed.csv"
+    val_csv: "data/processed/val_processed.csv"
     epochs: 10
     batch_size: 32
     learning_rate: 0.001
     random_seed: 42
-    model_output: "../../models/baseline_model.pth"
+    model_output: "models/baseline_model.pth"
 
   large_batch:
-    train_csv: "../../data/processed/train_processed.csv"
-    val_csv: "../../data/processed/val_processed.csv"
+    train_csv: "data/processed/train_processed.csv"
+    val_csv: "data/processed/val_processed.csv"
     epochs: 10
     batch_size: 64
     learning_rate: 0.001
     random_seed: 42
-    model_output: "../../models/large_batch_model.pth"
+    model_output: "models/large_batch_model.pth"
 
   high_lr:
-    train_csv: "../../data/processed/train_processed.csv"
-    val_csv: "../../data/processed/val_processed.csv"
+    train_csv: "data/processed/train_processed.csv"
+    val_csv: "data/processed/val_processed.csv"
     epochs: 10
     batch_size: 32
     learning_rate: 0.01
     random_seed: 42
-    model_output: "../../models/high_lr_model.pth"
+    model_output: "models/high_lr_model.pth"

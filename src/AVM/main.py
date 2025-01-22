@@ -28,7 +28,6 @@ def train(
     lr: float = 1e-3,
     model_output: str = "src/AVM/price_model.pth",
     random_seed: int = 42
-    
 ):
     """
     Train a simple PyTorch feed-forward model using 

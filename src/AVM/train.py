@@ -5,7 +5,7 @@ from data import PriceDataset, FEATURE_COLUMNS
 from model import PricePredictionModel
 
 # Default configuration file path
-DEFAULT_CONFIG_PATH = "../../configs/modelTraningConfig.yaml"
+DEFAULT_CONFIG_PATH = "configs/modelTraningConfig.yaml"
 
 def load_config(config_path: str, config_name: str):
     with open(config_path, 'r') as file:
