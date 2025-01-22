@@ -413,7 +413,7 @@ In our project, we did not directly utilize Compute Engine instances; instead, w
 >
 > Answer:
 
---- question 19 fill here ---
+[this figure](figures/avmbucket.png)
 
 ### Question 20
 
@@ -422,7 +422,8 @@ In our project, we did not directly utilize Compute Engine instances; instead, w
 >
 > Answer:
 
---- question 20 fill here ---
+[this figure](figures/avmregistry.png)
+[this figure](figures/avmregistry2.png)
 
 ### Question 21
 
@@ -431,7 +432,7 @@ In our project, we did not directly utilize Compute Engine instances; instead, w
 >
 > Answer:
 
---- question 21 fill here ---
+[this figure](figures/avmbuild.png)
 
 ### Question 22
 
@@ -446,8 +447,9 @@ In our project, we did not directly utilize Compute Engine instances; instead, w
 >
 > Answer:
 
---- question 22 fill here ---
+Yes, we successfully trained our model in the cloud using Vertex AI. We achieved this by first creating a custom training Dockerfile that defined our training environment, including dependencies and the training script. We then wrote configuration files specifying parameters such as resource allocation and training settings. The Docker image was built and pushed to Artifact Registry, allowing Vertex AI to access and use it for model training.
 
+Once the container was available, we created a custom training job on Vertex AI, specifying the image location and necessary configurations for the training process. After completion, the trained model was automatically exported and stored in a Cloud Storage bucket for further evaluation and deployment. We chose Vertex AI because it provides a managed and scalable environment, abstracting infrastructure complexities while offering seamless integration with other GCP services such as Cloud Storage and Artifact Registry. This streamlined our workflow, enabling efficient model training and deployment in the cloud.
 ## Deployment
 
 ### Question 23
