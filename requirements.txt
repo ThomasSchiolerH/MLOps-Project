@@ -23,7 +23,6 @@ dvc==3.59.0
 dvc-gs==3.0.1
 PyYAML
 pre-commit==4.1.0
-
 cachetools==5.5.0
 certifi==2024.12.14
 charset-normalizer==3.4.1
@@ -43,8 +42,6 @@ rsa==4.9
 uritemplate==4.1.1
 urllib3==2.3.0
 
-dvc 
-dvc-gs
 #fastapi
 #uvicorn
 #python-multipart
