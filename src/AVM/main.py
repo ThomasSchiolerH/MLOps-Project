@@ -69,13 +69,13 @@ def evaluate(
     """
     client = storage.Client()
     bucket = client.bucket("avm-storage")
-    blob = bucket.blob("models/price_model_VERTEXWORKING.pth")
+    blob = bucket.blob("models/price_model_vertexworking3.pth")
 
     # Download the model locally
-    blob.download_to_filename("src/AVM/price_model2.pth")
+    blob.download_to_filename("src/AVM/vertex.pth")
     print("Model downloaded successfully.")
 
-    evaluate_model(model_checkpoint, test_file)
+    evaluate_model("src/AVM/vertex.pth", test_file)
 
 if __name__ == "__main__":
     app()
