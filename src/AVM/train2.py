@@ -8,7 +8,7 @@ import numpy as np
 import torch
 
 # Load dataset
-df = pd.read_csv('src/AVM/train_processed.csv')
+df = pd.read_csv('data/processed/train_processed.csv')
 
 # Convert object columns to category
 for col in df.select_dtypes(include=['object']).columns:
@@ -47,7 +47,7 @@ print(f"Accuracy within ±5%: {acc_5:.2f}% (Benchmark: 30.1%)")
 print(f"Accuracy within ±10%: {acc_10:.2f}% (Benchmark: 54.1%)")
 print(f"Accuracy within ±20%: {acc_20:.2f}% (Benchmark: 81.4%)")
 
-df_val = pd.read_csv('src/AVM/val_processed.csv')
+df_val = pd.read_csv('data/processed/val_processed.csv')
 
 # Convert object columns to category
 for col in df_val.select_dtypes(include=['object']).columns:

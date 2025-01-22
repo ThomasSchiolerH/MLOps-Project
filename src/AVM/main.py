@@ -23,8 +23,8 @@ def data(
 def train(
     train_csv: str = "data/processed/train_processed.csv",
     val_csv: str = "data/processed/val_processed.csv",
-    epochs: int = 10,
-    batch_size: int = 32,
+    epochs: int = 15,
+    batch_size: int = 64,
     lr: float = 1e-3,
     model_output: str = "src/AVM/price_model.pth",
     random_seed: int = 42
@@ -54,7 +54,7 @@ def train(
         print(f"Model uploaded to gs://{bucket_name}/{destination_blob_name}")
 
     
-    #upload_to_gcs("src/AVM/price_model.pth", "avm-storage", "models/price_model_vertexworking2.pth")
+    upload_to_gcs("src/AVM/price_model.pth", "avm-storage", "models/price_model_vertexworking3.pth")
 
     print(f"Model weights saved to {model_output}")
 
@@ -62,7 +62,7 @@ def train(
 def evaluate(
     
     model_checkpoint: str = "src/AVM/price_model.pth",
-    test_file: str = "src/AVM/test_processed.csv"
+    test_file: str = "data/processed/test_processed.csv"
 ):
     """
     Evaluate the trained model on a test dataset (MSE).
@@ -75,7 +75,7 @@ def evaluate(
     blob.download_to_filename("src/AVM/price_model2.pth")
     print("Model downloaded successfully.")
 
-    evaluate_model("src/AVM/price_model2.pth", test_file)
+    evaluate_model(model_checkpoint, test_file)
 
 if __name__ == "__main__":
     app()

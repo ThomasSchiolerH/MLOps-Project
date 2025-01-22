@@ -145,6 +145,7 @@ def feature_engineering(df: pd.DataFrame, log_transform: bool = False) -> pd.Dat
         df["TRADE_MONTH"] = df["TRADE_DATE"].dt.month
         df["TRADE_DAY"] = df["TRADE_DATE"].dt.day
         df.drop("TRADE_DATE", axis=1, inplace=True)
+        
 
     # --- 2) Floor parsing ---
     if "FLOOR" in df.columns:
