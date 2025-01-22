@@ -22,6 +22,8 @@ coverage==7.6.10
 dvc==3.59.0
 dvc-gs==3.0.1
 PyYAML
+wandb===0.19.4
+
 pre-commit==4.1.0
 cachetools==5.5.0
 certifi==2024.12.14
