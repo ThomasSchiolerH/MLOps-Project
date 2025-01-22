@@ -2,8 +2,8 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
 
-from src.AVM.data import PriceDataset, FEATURE_COLUMNS
-from src.AVM.model import PricePredictionModel
+from data import PriceDataset, FEATURE_COLUMNS
+from model import PricePredictionModel
 
 def evaluate_model(model_checkpoint: str, csv_path: str) -> float:
     """

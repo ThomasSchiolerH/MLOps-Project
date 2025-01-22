@@ -48,42 +48,42 @@ will check the repositories and the code to verify your answers.
 
 ### Week 1
 
-* [ ] Create a git repository (M5)
-* [ ] Make sure that all team members have write access to the GitHub repository (M5)
-* [ ] Create a dedicated environment for you project to keep track of your packages (M2)
-* [ ] Create the initial file structure using cookiecutter with an appropriate template (M6)
-* [ ] Fill out the `data.py` file such that it downloads whatever data you need and preprocesses it (if necessary) (M6)
-* [ ] Add a model to `model.py` and a training procedure to `train.py` and get that running (M6)
-* [ ] Remember to fill out the `requirements.txt` and `requirements_dev.txt` file with whatever dependencies that you
+* [x] Create a git repository (M5)
+* [x] Make sure that all team members have write access to the GitHub repository (M5)
+* [x] Create a dedicated environment for you project to keep track of your packages (M2)
+* [x] Create the initial file structure using cookiecutter with an appropriate template (M6)
+* [x] Fill out the `data.py` file such that it downloads whatever data you need and preprocesses it (if necessary) (M6)
+* [x] Add a model to `model.py` and a training procedure to `train.py` and get that running (M6)
+* [x] Remember to fill out the `requirements.txt` and `requirements_dev.txt` file with whatever dependencies that you
     are using (M2+M6)
-* [ ] Remember to comply with good coding practices (`pep8`) while doing the project (M7)
+* [x] Remember to comply with good coding practices (`pep8`) while doing the project (M7)
 * [ ] Do a bit of code typing and remember to document essential parts of your code (M7)
-* [ ] Setup version control for your data or part of your data (M8)
-* [ ] Add command line interfaces and project commands to your code where it makes sense (M9)
-* [ ] Construct one or multiple docker files for your code (M10)
-* [ ] Build the docker files locally and make sure they work as intended (M10)
-* [ ] Write one or multiple configurations files for your experiments (M11)
-* [ ] Used Hydra to load the configurations and manage your hyperparameters (M11)
+* [x] Setup version control for your data or part of your data (M8)
+* [x] Add command line interfaces and project commands to your code where it makes sense (M9)
+* [x] Construct one or multiple docker files for your code (M10)
+* [x] Build the docker files locally and make sure they work as intended (M10)
+* [x] Write one or multiple configurations files for your experiments (M11)
+* [x] Used Hydra to load the configurations and manage your hyperparameters (M11)
 * [ ] Use profiling to optimize your code (M12)
 * [ ] Use logging to log important events in your code (M14)
-* [ ] Use Weights & Biases to log training progress and other important metrics/artifacts in your code (M14)
+* [x] Use Weights & Biases to log training progress and other important metrics/artifacts in your code (M14)
 * [ ] Consider running a hyperparameter optimization sweep (M14)
 * [ ] Use PyTorch-lightning (if applicable) to reduce the amount of boilerplate in your code (M15)
 
 ### Week 2
 
-* [ ] Write unit tests related to the data part of your code (M16)
-* [ ] Write unit tests related to model construction and or model training (M16)
-* [ ] Calculate the code coverage (M16)
+* [x] Write unit tests related to the data part of your code (M16)
+* [x] Write unit tests related to model construction and or model training (M16)
+* [x] Calculate the code coverage (M16)
 * [ ] Get some continuous integration running on the GitHub repository (M17)
 * [ ] Add caching and multi-os/python/pytorch testing to your continuous integration (M17)
 * [ ] Add a linting step to your continuous integration (M17)
 * [ ] Add pre-commit hooks to your version control setup (M18)
 * [ ] Add a continues workflow that triggers when data changes (M19)
 * [ ] Add a continues workflow that triggers when changes to the model registry is made (M19)
-* [ ] Create a data storage in GCP Bucket for your data and link this with your data version control setup (M21)
+* [x] Create a data storage in GCP Bucket for your data and link this with your data version control setup (M21)
 * [ ] Create a trigger workflow for automatically building your docker images (M21)
-* [ ] Get your model training in GCP using either the Engine or Vertex AI (M21)
+* [x] Get your model training in GCP using either the Engine or Vertex AI (M21)
 * [ ] Create a FastAPI application that can do inference using your model (M22)
 * [ ] Deploy your model in GCP using either Functions or Run as the backend (M23)
 * [ ] Write API tests for your application and setup continues integration for these (M24)
@@ -104,12 +104,12 @@ will check the repositories and the code to verify your answers.
 
 ### Extra
 
-* [ ] Write some documentation for your application (M32)
-* [ ] Publish the documentation to GitHub Pages (M32)
-* [ ] Revisit your initial project description. Did the project turn out as you wanted?
-* [ ] Create an architectural diagram over your MLOps pipeline
-* [ ] Make sure all group members have an understanding about all parts of the project
-* [ ] Uploaded all your code to GitHub
+* [x] Write some documentation for your application (M32)
+* [x] Publish the documentation to GitHub Pages (M32)
+* [x] Revisit your initial project description. Did the project turn out as you wanted?
+* [x] Create an architectural diagram over your MLOps pipeline
+* [x] Make sure all group members have an understanding about all parts of the project
+* [x] Uploaded all your code to GitHub
 
 ## Group information
 
@@ -388,7 +388,8 @@ In a machine learning pipeline, using DVC could have helped us streamline data m
 >
 > Answer:
 
---- question 17 fill here ---
+In our project, we utilized several GCP services to streamline the MLOps workflow. Cloud Storage (Bucket) was used to securely store datasets, models, and other artifacts, providing a centralized location for data access across various components. Artifact Registry played a crucial role in storing and managing Docker container images and ML model artifacts. Cloud Build enabled us to automate the build, test, and deployment processes. We leveraged Vertex AI for its end-to-end machine learning capabilities, using it to train and push our models efficiently to a bucket. Cloud Functions provided a serverless environment to execute lightweight tasks. Finally, Cloud Run allowed us to deploy and scale containerized ML inference services with minimal operational overhead, ensuring efficient resource utilization and scalability. Together, these services facilitated a robust, automated, and scalable MLOps pipeline.
+
 
 ### Question 18
 
@@ -403,7 +404,7 @@ In a machine learning pipeline, using DVC could have helped us streamline data m
 >
 > Answer:
 
---- question 18 fill here ---
+In our project, we did not directly utilize Compute Engine instances; instead, we leveraged Vertex AI, which abstracts the underlying infrastructure and provides managed services for machine learning workloads. Vertex AI internally utilizes Compute Engine to run training jobs, deploy models, and handle inference, but this is managed by GCP, allowing us to focus on model development rather than infrastructure management. Vertex AI automatically provisions the necessary compute resources based on workload requirements, optimizing for performance and cost. While we did not manually select specific VM types, Vertex AI typically uses machine types optimized for ML tasks, such as those with GPUs or TPUs for accelerated training and inference. This approach allowed us to efficiently scale our ML workflows without having to handle VM configuration and management manually.
 
 ### Question 19
 
@@ -412,7 +413,7 @@ In a machine learning pipeline, using DVC could have helped us streamline data m
 >
 > Answer:
 
---- question 19 fill here ---
+[AVM Bucket](figures/avmbucket.png)
 
 ### Question 20
 
@@ -421,7 +422,8 @@ In a machine learning pipeline, using DVC could have helped us streamline data m
 >
 > Answer:
 
---- question 20 fill here ---
+[AVM registry 1](figures/avmregistry.png)
+[AVM registry 2](figures/avmregistry2.png)
 
 ### Question 21
 
@@ -430,7 +432,7 @@ In a machine learning pipeline, using DVC could have helped us streamline data m
 >
 > Answer:
 
---- question 21 fill here ---
+[AVM build ](figures/avmbuild.png)
 
 ### Question 22
 
@@ -445,8 +447,9 @@ In a machine learning pipeline, using DVC could have helped us streamline data m
 >
 > Answer:
 
---- question 22 fill here ---
+Yes, we successfully trained our model in the cloud using Vertex AI. We achieved this by first creating a custom training Dockerfile that defined our training environment, including dependencies and the training script. We then wrote configuration files specifying parameters such as resource allocation and training settings. The Docker image was built and pushed to Artifact Registry, allowing Vertex AI to access and use it for model training.
 
+Once the container was available, we created a custom training job on Vertex AI, specifying the image location and necessary configurations for the training process. After completion, the trained model was automatically exported and stored in a Cloud Storage bucket for further evaluation and deployment. We chose Vertex AI because it provides a managed and scalable environment, abstracting infrastructure complexities while offering seamless integration with other GCP services such as Cloud Storage and Artifact Registry. This streamlined our workflow, enabling efficient model training and deployment in the cloud.
 ## Deployment
 
 ### Question 23
