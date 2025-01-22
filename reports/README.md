@@ -413,7 +413,7 @@ In our project, we did not directly utilize Compute Engine instances; instead, w
 >
 > Answer:
 
-[this figure](figures/avmbucket.png)
+[AVM Bucket](figures/avmbucket.png)
 
 ### Question 20
 
@@ -422,8 +422,8 @@ In our project, we did not directly utilize Compute Engine instances; instead, w
 >
 > Answer:
 
-[this figure](figures/avmregistry.png)
-[this figure](figures/avmregistry2.png)
+[AVM registry 1](figures/avmregistry.png)
+[AVM registry 2](figures/avmregistry2.png)
 
 ### Question 21
 
@@ -432,7 +432,7 @@ In our project, we did not directly utilize Compute Engine instances; instead, w
 >
 > Answer:
 
-[this figure](figures/avmbuild.png)
+[AVM build ](figures/avmbuild.png)
 
 ### Question 22
 
