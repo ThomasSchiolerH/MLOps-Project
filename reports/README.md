@@ -388,7 +388,8 @@ In a machine learning pipeline, using DVC could have helped us streamline data m
 >
 > Answer:
 
---- question 17 fill here ---
+In our project, we utilized several GCP services to streamline the MLOps workflow. Cloud Storage (Bucket) was used to securely store datasets, models, and other artifacts, providing a centralized location for data access across various components. Artifact Registry played a crucial role in storing and managing Docker container images and ML model artifacts. Cloud Build enabled us to automate the build, test, and deployment processes. We leveraged Vertex AI for its end-to-end machine learning capabilities, using it to train and push our models efficiently to a bucket. Cloud Functions provided a serverless environment to execute lightweight tasks. Finally, Cloud Run allowed us to deploy and scale containerized ML inference services with minimal operational overhead, ensuring efficient resource utilization and scalability. Together, these services facilitated a robust, automated, and scalable MLOps pipeline.
+
 
 ### Question 18
 
@@ -403,7 +404,7 @@ In a machine learning pipeline, using DVC could have helped us streamline data m
 >
 > Answer:
 
---- question 18 fill here ---
+In our project, we did not directly utilize Compute Engine instances; instead, we leveraged Vertex AI, which abstracts the underlying infrastructure and provides managed services for machine learning workloads. Vertex AI internally utilizes Compute Engine to run training jobs, deploy models, and handle inference, but this is managed by GCP, allowing us to focus on model development rather than infrastructure management. Vertex AI automatically provisions the necessary compute resources based on workload requirements, optimizing for performance and cost. While we did not manually select specific VM types, Vertex AI typically uses machine types optimized for ML tasks, such as those with GPUs or TPUs for accelerated training and inference. This approach allowed us to efficiently scale our ML workflows without having to handle VM configuration and management manually.
 
 ### Question 19
 

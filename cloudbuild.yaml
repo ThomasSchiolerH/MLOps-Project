@@ -21,4 +21,4 @@ options:
   logging: CLOUD_LOGGING_ONLY
 
 substitutions:
-  _IMAGE_NAME: 'mlops-avm-train4'
+  _IMAGE_NAME: 'mlops-avm-training4'

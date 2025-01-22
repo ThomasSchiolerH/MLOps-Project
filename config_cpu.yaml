@@ -4,4 +4,4 @@ workerPoolSpecs:
         machineType: n1-highmem-2
     replicaCount: 1
     containerSpec:
-        imageUri: europe-west1-docker.pkg.dev/avm-mlops/avm-container/mlops-avm-train5
+        imageUri: europe-west1-docker.pkg.dev/avm-mlops/avm-container/mlops-avm-training4

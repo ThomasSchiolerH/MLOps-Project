@@ -39,9 +39,6 @@ FEATURE_COLUMNS = [
     "DISTANCE_HARBOUR",
     "DISTANCE_COAST",
     "HAS_ELEVATOR",
-    "HAS_TOILET",
-    "HAS_SHOWER",
-    "HAS_KITCHEN",
     "AREA_TINGLYST",
     "AREA_RESIDENTIAL",
     "AREA_OTHER",
@@ -156,9 +153,13 @@ def feature_engineering(df: pd.DataFrame, log_transform: bool = False) -> pd.Dat
         df["FLOOR"] = 0.0
 
     # --- 3) Facility columns -> booleans ---
-    df["HAS_TOILET"] = df["FACILITIES_TOILET"].apply(facility_clean)
-    df["HAS_SHOWER"] = df["FACILITIES_SHOWER"].apply(facility_clean)
-    df["HAS_KITCHEN"] = df["FACILITIES_KITCHEN"].apply(facility_clean)
+    #df["HAS_TOILET"] = df["FACILITIES_TOILET"].apply(facility_clean)
+    #df["HAS_SHOWER"] = df["FACILITIES_SHOWER"].apply(facility_clean)
+    #df["HAS_KITCHEN"] = df["FACILITIES_KITCHEN"].apply(facility_clean)
+    
+    df.drop(["FACILITIES_TOILET", "FACILITIES_SHOWER", "FACILITIES_KITCHEN"], 
+        axis=1, 
+        inplace=True)
 
     # --- 4) HAS_ELEVATOR ---
     if "HAS_ELEVATOR" in df.columns:

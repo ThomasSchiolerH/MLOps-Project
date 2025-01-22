@@ -14,7 +14,9 @@ google-cloud
 google-cloud-storage
 google-cloud-aiplatform
 google-auth
+PyYAML
+dvc 
+dvc-gs
 #fastapi
 #uvicorn
-#PyYAML
 #python-multipart

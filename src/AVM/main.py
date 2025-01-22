@@ -10,9 +10,9 @@ from evaluate import evaluate_model
 app = typer.Typer()
 
 @app.command()
-def data_preprocess(
-    raw_data_path: str = "../data/raw/HACKATHON.AVM_EJERLEJLIGHEDER_TRAIN.csv",
-    output_folder: str = "../data/processed"
+def data(
+    raw_data_path: str = "data/raw/HACKATHON.AVM_EJERLEJLIGHEDER_TRAIN.csv",
+    output_folder: str = "data/processed"
 ):
     """
     Run a simple data preprocessing step to output a clean CSV.
@@ -21,8 +21,8 @@ def data_preprocess(
 
 @app.command()
 def train(
-    train_csv: str = "src/AVM/train_processed.csv",
-    val_csv: str = "src/AVM/val_processed.csv",
+    train_csv: str = "data/processed/train_processed.csv",
+    val_csv: str = "data/processed/val_processed.csv",
     epochs: int = 10,
     batch_size: int = 32,
     lr: float = 1e-3,
@@ -54,7 +54,7 @@ def train(
         print(f"Model uploaded to gs://{bucket_name}/{destination_blob_name}")
 
     
-    upload_to_gcs("src/AVM/price_model.pth", "avm-storage", "models/price_model_VERTEXWORKING.pth")
+    #upload_to_gcs("src/AVM/price_model.pth", "avm-storage", "models/price_model_vertexworking2.pth")
 
     print(f"Model weights saved to {model_output}")
 
@@ -69,7 +69,7 @@ def evaluate(
     """
     client = storage.Client()
     bucket = client.bucket("avm-storage")
-    blob = bucket.blob("models/price_model2.pth")
+    blob = bucket.blob("models/price_model_VERTEXWORKING.pth")
 
     # Download the model locally
     blob.download_to_filename("src/AVM/price_model2.pth")
