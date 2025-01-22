@@ -5,3 +5,9 @@ data/raw/*.csv
 # Allow .gitkeep files
 !data/processed/.gitkeep
 !data/raw/.gitkeep
+
+wandb/
+
+src/AVM/__pycache__/
+
+*.pyc
