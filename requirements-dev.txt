@@ -19,5 +19,5 @@ mkdocs==1.5.3
 mkdocs-material==9.4.6
 mkdocstrings-python==1.12.2
 
-gvc===3.59.0
-gvc-gs===3.0.1
+dvc==3.59.0
+dvc-gs==3.0.1
