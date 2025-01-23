@@ -75,10 +75,10 @@ will check the repositories and the code to verify your answers.
 * [x] Write unit tests related to the data part of your code (M16)
 * [x] Write unit tests related to model construction and or model training (M16)
 * [x] Calculate the code coverage (M16)
-* [ ] Get some continuous integration running on the GitHub repository (M17)
-* [ ] Add caching and multi-os/python/pytorch testing to your continuous integration (M17)
-* [ ] Add a linting step to your continuous integration (M17)
-* [ ] Add pre-commit hooks to your version control setup (M18)
+* [x] Get some continuous integration running on the GitHub repository (M17)
+* [x] Add caching and multi-os/python/pytorch testing to your continuous integration (M17)
+* [x] Add a linting step to your continuous integration (M17)
+* [x] Add pre-commit hooks to your version control setup (M18)
 * [ ] Add a continues workflow that triggers when data changes (M19)
 * [ ] Add a continues workflow that triggers when changes to the model registry is made (M19)
 * [x] Create a data storage in GCP Bucket for your data and link this with your data version control setup (M21)
@@ -89,7 +89,7 @@ will check the repositories and the code to verify your answers.
 * [ ] Write API tests for your application and setup continues integration for these (M24)
 * [ ] Load test your application (M24)
 * [ ] Create a more specialized ML-deployment API using either ONNX or BentoML, or both (M25)
-* [ ] Create a frontend for your API (M26)
+* [x] Create a frontend for your API (M26)
 
 ### Week 3
 
@@ -198,7 +198,9 @@ By following these steps, a new team member will have an exact copy of the devel
 >
 > Answer:
 
---- question 6 fill here ---
+We implemented several rules for code quality, formatting, typing, and documentation. For linting and formatting, we used Ruff, which ensures adherence to Python style conventions, fixes linting violations, and maintains consistent code formatting. For static type checking, we integrated mypy into our workflows, running it in strict mode to catch potential type-related bugs early in development. Documentation is encouraged through pre-commit hooks like check-docstring-first, ensuring functions and classes include docstrings.
+
+These concepts are vital in larger projects because they improve collaboration, maintainability, and scalability. Code quality rules and consistent formatting prevent stylistic disagreements and reduce merge conflicts. Typing helps detect type mismatches and reduces runtime errors, enabling developers to catch bugs before deployment. Proper documentation aids new contributors in understanding the project, reducing onboarding time and ensuring long-term project viability. For example, mypy ensures that all function arguments and return values are used as intended, preventing issues when integrating modules.
 
 ## Version control
 
@@ -294,7 +296,13 @@ In a machine learning pipeline, using DVC could have helped us streamline data m
 >
 > Answer:
 
---- question 11 fill here ---
+Our continuous integration (CI) setup is structured into two workflows: Code Quality and Unit Tests. The Code Quality workflow focuses on linting and static type checking. It uses Ruff to enforce consistent formatting and detect code quality issues, while mypy checks for type correctness in strict mode to catch potential bugs early. This workflow runs on pushes and pull requests to the main branch, ensuring code quality is validated continuously.
+
+The Unit Tests workflow ensures correctness through testing and code coverage analysis. It is configured to run on a matrix of environments, including two operating systems (ubuntu-latest, macos-latest) and two Python versions (3.11, 3.12). This comprehensive setup guarantees compatibility across multiple platforms. The workflow installs dependencies using pip, executes tests with pytest, and generates coverage reports with coverage.
+
+Both workflows leverage GitHub Actions' caching capabilities to optimize performance. For example, pip dependencies are cached based on the hashes of requirements.txt and requirements-dev.txt, reducing installation times. Test artifacts (like .pytest_cache) are also cached to speed up repeated runs. This ensures that our CI pipeline remains efficient and cost-effective, even as the project scales.
+
+These workflows ensure code quality, maintainability, and reliability by validating style, type safety, and correctness at every stage. By automating these processes, we minimize human error and reduce the overhead of manual checks. You can view an example of the Code Quality workflow [here](https://github.com/ThomasSchiolerH/MLOps-Project/blob/main/.github/workflows/test.yml)
 
 ## Running code and tracking experiments
 
@@ -510,7 +518,7 @@ We did not perform formal unit testing or load testing for our API. However, if 
 
 For unit and integration testing, we would create a tests/ folder in our project and use the FastAPI test client to simulate API requests. We would verify that the API returns expected status codes and correct responses for various input scenarios. The tests would be run using the command pytest tests/integrationtests/test_apis.py, ensuring our API meets its functional requirements.
 
-For load testing, we would use Locust, which allows simulating concurrent users interacting with our API. We would define test scenarios in a locustfile.py and run the tests locally. 
+For load testing, we would use Locust, which allows simulating concurrent users interacting with our API. We would define test scenarios in a locustfile.py and run the tests locally.
 
 This would help measure performance metrics such as average response time, the 99th percentile response time, and requests per second, identifying bottlenecks and ensuring the API can handle expected workloads efficiently.
 
