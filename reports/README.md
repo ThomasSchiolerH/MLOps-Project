@@ -321,7 +321,11 @@ These workflows ensure code quality, maintainability, and reliability by validat
 >
 > Answer:
 
---- question 12 fill here ---
+We configured experiments using a YAML file that supports multiple named configurations, making it easy to switch between setups like baseline, large_batch, or high_lr. The script uses argparse to accept --config (name of the desired configuration).
+Example command:
+```python train.py --config baseline```
+This approach centralizes parameters, ensuring consistent and flexible experimentation.
+
 
 ### Question 13
 
@@ -336,7 +340,12 @@ These workflows ensure code quality, maintainability, and reliability by validat
 >
 > Answer:
 
---- question 13 fill here ---
+We ensured reproducibility by using version-controlled YAML configuration files, where all hyperparameters and dataset paths are clearly defined and structured. Each experiment’s configuration is logged, and its outputs (e.g., trained model weights) are saved with unique identifiers in the filenames (e.g., baseline_model.pth).
+To reproduce an experiment:
+    1.	Run the script with the same –config argument.
+    2.	Ensure the datasets and preprocessing steps remain consistent (logged in the same YAML file).
+Additionally, random seeds are set for all experiments to control stochastic processes, ensuring consistent results across runs. These measures ensure no critical details are lost, and experiments are fully reproducible.
+
 
 ### Question 14
 
@@ -353,7 +362,13 @@ These workflows ensure code quality, maintainability, and reliability by validat
 >
 > Answer:
 
---- question 14 fill here ---
+![image](https://github.com/user-attachments/assets/521a7b1e-5a3f-442f-890c-5cef85a610d1)
+As seen in the attached image, we tracked several metrics during our experiments in W&B to understand the behavior and performance of our model across different configurations.
+In the first chart, we tracked the progression of epochs for three configurations: high_lr, large_batch, and baseline. This ensures all configurations follow the same number of steps for a fair comparison.
+The second chart shows the training loss over epochs for each configuration. This metric is essential as it helps us understand how well the model is fitting the training data. For instance, the high_lr configuration initially had a rapid decline in training loss but plateaued quickly, which suggests it may have reached its convergence limit earlier.
+The third chart tracks the validation loss over epochs. This metric is critical as it reflects the model's generalization ability to unseen data. While the large_batch configuration showed smoother validation loss compared to baseline and high_lr, the baseline configuration performed the best in terms of minimizing validation loss, indicating better generalization.
+These experiments demonstrate how different hyperparameters affect the training and validation process. W&B’s interactive dashboard allowed us to monitor these metrics in real-time and compare configurations effectively, helping us identify the best-performing setup for our project. This tracking setup makes it easier to fine-tune the model for optimal results.
+
 
 ### Question 15
 
@@ -383,7 +398,11 @@ These workflows ensure code quality, maintainability, and reliability by validat
 >
 > Answer:
 
---- question 16 fill here ---
+When we ran into bugs, we used simple methods like adding `print()` statements to check the flow of the code and inspect variable values. This helped us quickly figure out where things went wrong, especially in parts like data preprocessing and the training loop.  
+We also used the debugger in PyCharm to step through the code and see exactly what was happening. Breakpoints made it easy to pause and inspect variables, which was super useful for tracking down tricky issues.  
+For performance, instead of advanced profiling tools, we looked at how long certain steps took by using basic timers like Python’s `time` module. This gave us an idea of which parts of the code were slow and needed improvement, like the data loading process during training.  
+Overall, these simple techniques were enough to debug and optimize most of the issues we faced.
+
 
 ## Working in the cloud
 
