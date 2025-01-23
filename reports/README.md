@@ -183,7 +183,7 @@ By following these steps, a new team member will have an exact copy of the devel
 >
 > Answer:
 
-We have added integrationtests folder in tests folder and moved api tests there.
+We have added integrationtests folder in tests folder and moved api tests there. Also added api load tests in performancetests folder.
 
 ### Question 6
 
@@ -514,19 +514,11 @@ The service responds with a JSON object containing the model’s prediction. Tha
 >
 > Answer:
 
-We did not perform formal unit testing or load testing for our API. However, if we were to do it, we would follow a structured approach using tools like pytest for unit and integration testing, and Locust for load testing.
+For unit testing, we used the pytest framework to verify the functionality of our API endpoints. Key tests included checking the health check (/) endpoint, ensuring that the /predict endpoint returned accurate predictions with valid input, and verifying that appropriate error responses were returned for invalid or missing data. These tests also simulated scenarios such as the model not being loaded to validate the robustness of our API.
 
-For unit and integration testing, we would create a tests/ folder in our project and use the FastAPI test client to simulate API requests. We would verify that the API returns expected status codes and correct responses for various input scenarios. The tests would be run using the command pytest tests/integrationtests/test_apis.py, ensuring our API meets its functional requirements.
-
-For load testing, we would use Locust, which allows simulating concurrent users interacting with our API. We would define test scenarios in a locustfile.py and run the tests locally.
-
-This would help measure performance metrics such as average response time, the 99th percentile response time, and requests per second, identifying bottlenecks and ensuring the API can handle expected workloads efficiently.
+For load testing, we used Locust, a Python-based performance testing tool. We simulated a ramp-up of 50 users and scaled to a peak of 10,000 users. During the test, the / endpoint handled 39,338 requests with an average response time of 617 ms, and the /predict endpoint handled 118,008 requests with an average response time of 502 ms. No failures were recorded during the test. The 99th percentile response time for /predict was approximately 4.6 seconds, indicating that the service remained stable under heavy load. These results demonstrate that the API can handle significant traffic without degradation, making it suitable for real-world deployment on platforms like Google Cloud Run.
 
 In the future, we would aim to integrate these tests into our CI/CD pipeline to automatically verify functionality and performance after deployment.
-
-
-
-
 
 ### Question 26
 
