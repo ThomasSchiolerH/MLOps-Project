@@ -7,7 +7,7 @@ steps:
     '-t',
     'europe-west1-docker.pkg.dev/$PROJECT_ID/avm-container/$_IMAGE_NAME',
     '-f',
-    'dockerfiles/train.dockerfile'
+    'dockerfiles/api.dockerfile'
   ]
 
 - name: 'gcr.io/cloud-builders/docker'
@@ -21,4 +21,4 @@ options:
   logging: CLOUD_LOGGING_ONLY
 
 substitutions:
-  _IMAGE_NAME: 'mlops-avm-training5'
+  _IMAGE_NAME: 'api2'

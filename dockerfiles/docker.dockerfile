@@ -12,5 +12,6 @@ COPY data /app/data
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
+
 # Default command (can be overridden when running the container)
 CMD ["python", "-m", "src.AVM.main", "evaluate", "--model-checkpoint", "models/price_model.pth", "--test-file", "data/processed/test_processed.csv"]
