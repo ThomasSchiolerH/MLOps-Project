@@ -157,9 +157,13 @@ def feature_engineering(df: pd.DataFrame, log_transform: bool = False) -> pd.Dat
     #df["HAS_SHOWER"] = df["FACILITIES_SHOWER"].apply(facility_clean)
     #df["HAS_KITCHEN"] = df["FACILITIES_KITCHEN"].apply(facility_clean)
     
-    df.drop(["FACILITIES_TOILET", "FACILITIES_SHOWER", "FACILITIES_KITCHEN"], 
+    df.drop(
+        ["FACILITIES_TOILET", "FACILITIES_SHOWER", "FACILITIES_KITCHEN"], 
         axis=1, 
-        inplace=True)
+        inplace=True,
+        errors="ignore"
+    )
+
 
     # --- 4) HAS_ELEVATOR ---
     if "HAS_ELEVATOR" in df.columns:

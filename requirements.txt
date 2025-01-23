@@ -14,9 +14,6 @@ google-cloud
 google-cloud-storage
 google-cloud-aiplatform
 google-auth
-#fastapi
-#uvicorn
-#python-multipart
 pytest==8.3.4
 coverage==7.6.10
 dvc==3.59.0

@@ -89,6 +89,8 @@ def html() -> None:
 
     with open("report.html", "w") as newfile:
         newfile.write(html)
+        
+        
 
 
 @app.command()

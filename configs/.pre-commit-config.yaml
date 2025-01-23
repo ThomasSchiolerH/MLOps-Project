@@ -1,0 +1,44 @@
+default_language_version:
+  python: python3
+
+repos:
+  # Basic checks for file endings, whitespace, and more
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: end-of-file-fixer          # Ensures files end with a newline
+      - id: trailing-whitespace        # Removes trailing whitespace
+      - id: check-toml                 # Validates TOML files
+      - id: check-docstring-first      # Ensures docstrings are at the beginning of functions
+      - id: check-executables-have-shebangs # Checks for shebang in executable files
+      - id: check-case-conflict        # Detects case conflicts in filenames
+      - id: detect-private-key         # Prevents committing private keys
+
+  # Ruff for linting and formatting
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.8.4
+    hooks:
+      - id: ruff                       # Performs linting
+        args: ["--fix", "--unsafe-fixes"] # Tries to autofix violations
+      - id: ruff-format                # Ensures consistent code formatting
+
+  # Spell checking
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.2.5
+    hooks:
+      - id: codespell                  # Detects and corrects common spelling errors
+        additional_dependencies: [tomli]
+        exclude: pyproject.toml
+
+  # Markdown linting
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.37.0
+    hooks:
+      - id: markdownlint-docker
+        args: ["-c", ".github/markdownlint.json"] # Uses a custom markdownlint configuration file
+
+  # Typo detection
+  - repo: https://github.com/crate-ci/typos
+    rev: v1.20.7
+    hooks:
+      - id: typos                      # Detects typos in code and documentation

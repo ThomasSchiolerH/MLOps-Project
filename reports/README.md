@@ -84,8 +84,8 @@ will check the repositories and the code to verify your answers.
 * [x] Create a data storage in GCP Bucket for your data and link this with your data version control setup (M21)
 * [ ] Create a trigger workflow for automatically building your docker images (M21)
 * [x] Get your model training in GCP using either the Engine or Vertex AI (M21)
-* [ ] Create a FastAPI application that can do inference using your model (M22)
-* [ ] Deploy your model in GCP using either Functions or Run as the backend (M23)
+* [x] Create a FastAPI application that can do inference using your model (M22)
+* [x] Deploy your model in GCP using either Functions or Run as the backend (M23)
 * [ ] Write API tests for your application and setup continues integration for these (M24)
 * [ ] Load test your application (M24)
 * [ ] Create a more specialized ML-deployment API using either ONNX or BentoML, or both (M25)
@@ -118,7 +118,7 @@ will check the repositories and the code to verify your answers.
 >
 > Answer:
 
---- question 1 fill here ---
+Group 22
 
 ### Question 2
 > **Enter the study number for each member in the group**
@@ -129,7 +129,7 @@ will check the repositories and the code to verify your answers.
 >
 > Answer:
 
---- question 2 fill here ---
+*s214963, s214952, s214968*
 
 ### Question 3
 > **A requirement to the project is that you include a third-party package not covered in the course. What framework**
@@ -163,7 +163,11 @@ will check the repositories and the code to verify your answers.
 >
 > Answer:
 
---- question 4 fill here ---
+We used a requirements.txt file for managing our dependencies. This file lists all the Python packages required for the project along with their specific versions. We added dependencies along the way to ensure all necessary packages were included.
+
+To get an exact copy of our development environment, a new team member would need to follow these steps: Clone the project repository. Navigate to the project directory. Create a virtual environment. Activate the virtual environment. Install the dependencies from the requirements.txt file using pip install -r requirements.txt.
+
+By following these steps, a new team member will have an exact copy of the development environment, ensuring consistency across the team and avoiding potential issues related to missing or incompatible packages.
 
 ### Question 5
 
@@ -413,7 +417,7 @@ In our project, we did not directly utilize Compute Engine instances; instead, w
 >
 > Answer:
 
-[AVM Bucket](figures/avmbucket.png)
+![AVM Bucket](figures/avmbucket.png)
 
 ### Question 20
 
@@ -422,8 +426,8 @@ In our project, we did not directly utilize Compute Engine instances; instead, w
 >
 > Answer:
 
-[AVM registry 1](figures/avmregistry.png)
-[AVM registry 2](figures/avmregistry2.png)
+![AVM registry 1](figures/avmregistry.png)
+![AVM registry 2](figures/avmregistry2.png)
 
 ### Question 21
 
@@ -432,7 +436,7 @@ In our project, we did not directly utilize Compute Engine instances; instead, w
 >
 > Answer:
 
-[AVM build ](figures/avmbuild.png)
+![AVM build ](figures/avmbuild.png)
 
 ### Question 22
 
@@ -465,7 +469,7 @@ Once the container was available, we created a custom training job on Vertex AI,
 >
 > Answer:
 
---- question 23 fill here ---
+We did manage to write an API for our model, and we chose FastAPI to do it. The main reason for picking FastAPI was its simplicity and built-in features like automatic documentation and validation. We started by creating a Python module that loads our trained model—either from a local file or from a cloud storage location—then initializes FastAPI. We wrote a few endpoint functions: a health-check endpoint that just returns “OK,” and a prediction endpoint that accepts JSON input with the necessary features. Inside the prediction endpoint, we parse and validate the incoming data, apply the same feature-engineering transformations we used at training time, and then pass the processed features to the model’s predict() method. Finally, we return the prediction in JSON format to the user. One extra step we took was to containerize everything with Docker, which ensures our environment remains consistent across development, testing, and production.
 
 ### Question 24
 
@@ -481,7 +485,13 @@ Once the container was available, we created a custom training job on Vertex AI,
 >
 > Answer:
 
---- question 24 fill here ---
+For deployment, we first tested locally by running our FastAPI service in a Docker container. This approach allowed us to verify that our endpoints functioned correctly and that all dependencies were properly installed. We then pushed our Docker image to Google Artifact Registry, ensuring the image was compatible with an amd64 architecture. Finally, we deployed the container to Google Cloud Run, which automatically handled scaling, load balancing, and HTTPS. To invoke our deployed service, we simply send an HTTP POST request to the generated Cloud Run URL, adding the path /predict for the prediction endpoint. For example, one can run:
+
+curl -X POST \
+  -H "Content-Type: application/json" \
+  -d '{"AREA_TINGLYST": 100, "CONSTRUCTION_YEAR": 1990, ...}' \
+  https://<cloud-run-service-url>/predict
+The service responds with a JSON object containing the model’s prediction. Thanks to Cloud Run’s serverless model, we only pay for the compute resources used when requests arrive.
 
 ### Question 25
 
@@ -496,7 +506,19 @@ Once the container was available, we created a custom training job on Vertex AI,
 >
 > Answer:
 
---- question 25 fill here ---
+We did not perform formal unit testing or load testing for our API. However, if we were to do it, we would follow a structured approach using tools like pytest for unit and integration testing, and Locust for load testing.
+
+For unit and integration testing, we would create a tests/ folder in our project and use the FastAPI test client to simulate API requests. We would verify that the API returns expected status codes and correct responses for various input scenarios. The tests would be run using the command pytest tests/integrationtests/test_apis.py, ensuring our API meets its functional requirements.
+
+For load testing, we would use Locust, which allows simulating concurrent users interacting with our API. We would define test scenarios in a locustfile.py and run the tests locally. 
+
+This would help measure performance metrics such as average response time, the 99th percentile response time, and requests per second, identifying bottlenecks and ensuring the API can handle expected workloads efficiently.
+
+In the future, we would aim to integrate these tests into our CI/CD pipeline to automatically verify functionality and performance after deployment.
+
+
+
+
 
 ### Question 26
 
@@ -511,7 +533,11 @@ Once the container was available, we created a custom training job on Vertex AI,
 >
 > Answer:
 
---- question 26 fill here ---
+We did not manage to implement monitoring for our deployed model. However, implementing monitoring would be crucial for ensuring the long-term reliability and performance of our application. Over time, machine learning models can experience data drift, where the input data distribution changes compared to the training data, potentially leading to degraded performance. Monitoring would allow us to detect such issues early and take corrective actions, such as retraining the model with updated data.
+
+In addition to model performance tracking, monitoring would help us measure key metrics such as API response times, error rates, and resource utilization (CPU/memory usage). This type of system monitoring, commonly done using tools like Prometheus and Grafana, would provide insights into application health and allow us to identify bottlenecks or failures proactively.
+
+For ML-specific monitoring, we could use tools such as Evidently AI, which can track metrics like feature drift and concept drift, helping us detect changes in the data over time. By implementing these monitoring practices, we would ensure our model remains effective and reliable, and that we are alerted when performance starts to degrade.
 
 ## Overall discussion of project
 
@@ -577,7 +603,13 @@ Once the container was available, we created a custom training job on Vertex AI,
 >
 > Answer:
 
---- question 30 fill here ---
+One of the biggest challenges we faced was deploying our model in the cloud using Docker and Google Cloud services, such as Cloud Run and Vertex AI. A significant amount of time was spent configuring Docker files, managing dependencies, and troubleshooting deployment issues. The primary challenge was dealing with credentials and IAM permissions, which required multiple deployment attempts and resulted in long waiting times to identify and fix minor issues.
+
+We initially deployed directly to the cloud to simplify access control, but in hindsight, it would have been more efficient to first set up and test everything locally. Running the API locally with tools like FastAPI and Docker would have allowed us to iterate faster, catch dependency issues earlier, and avoid long cloud build times.
+
+Managing environment variables and credentials was another struggle, leading to deployment failures due to permission issues. We also faced difficulties with cloud resource quotas and correct container configurations. To address this, we carefully configured Google Cloud IAM roles, used environment variable files, and optimized our Docker setup to streamline the deployment process.
+
+To overcome these challenges, we broke the deployment process into smaller steps, prioritized local testing, and used detailed logging to diagnose errors efficiently. By iterating locally before cloud deployment, we reduced the time spent on debugging and improved the overall development workflow, ultimately leading to a more stable deployment process.
 
 ### Question 31
 
