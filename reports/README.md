@@ -218,6 +218,7 @@ These concepts are vital in larger projects because they improve collaboration, 
 > *application but also ... .*
 >
 > Answer:
+
 In total, we have implemented 4 tests. Primarily, we are testing the model's ability to load correctly and produce valid predictions, which are critical for ensuring consistent performance. Additionally, we have implemented tests for data pipeline integrity to verify correct preprocessing and data loading. Finally, we have added tests to validate the accuracy metric calculations to ensure they meet the defined criteria for evaluating predictions within different error margins.
 
 
@@ -321,9 +322,9 @@ These workflows ensure code quality, maintainability, and reliability by validat
 >
 > Answer:
 
-We configured experiments using a YAML file that supports multiple named configurations, making it easy to switch between setups like baseline, large_batch, or high_lr. The script uses argparse to accept --config (name of the desired configuration).
-Example command:
-```python train.py --config baseline```
+We configured experiments using a YAML file that supports multiple named configurations, making it easy to switch between setups like baseline, large_batch, or high_lr. The script uses argparse to accept --config (name of the desired configuration). <br />
+Example command:<br />
+```python train.py --config baseline``` <br />
 This approach centralizes parameters, ensuring consistent and flexible experimentation.
 
 
@@ -340,10 +341,10 @@ This approach centralizes parameters, ensuring consistent and flexible experimen
 >
 > Answer:
 
-We ensured reproducibility by using version-controlled YAML configuration files, where all hyperparameters and dataset paths are clearly defined and structured. Each experiment’s configuration is logged, and its outputs (e.g., trained model weights) are saved with unique identifiers in the filenames (e.g., baseline_model.pth).
-To reproduce an experiment:
-    1.	Run the script with the same –config argument.
-    2.	Ensure the datasets and preprocessing steps remain consistent (logged in the same YAML file).
+We ensured reproducibility by using version-controlled YAML configuration files, where all hyperparameters and dataset paths are clearly defined and structured. Each experiment’s configuration is logged, and its outputs (e.g., trained model weights) are saved with unique identifiers in the filenames (e.g., baseline_model.pth). <br />
+To reproduce an experiment: <br />
+    1.	Run the script with the same –config argument. <br />
+    2.	Ensure the datasets and preprocessing steps remain consistent (logged in the same YAML file). <br />
 Additionally, random seeds are set for all experiments to control stochastic processes, ensuring consistent results across runs. These measures ensure no critical details are lost, and experiments are fully reproducible.
 
 
@@ -398,7 +399,7 @@ These experiments demonstrate how different hyperparameters affect the training 
 >
 > Answer:
 
-When we ran into bugs, we used simple methods like adding `print()` statements to check the flow of the code and inspect variable values. This helped us quickly figure out where things went wrong, especially in parts like data preprocessing and the training loop.  
+When we ran into bugs, we used simple methods like adding `print()` statements to check the flow of the code and inspect variable values. This helped us quickly figure out where things went wrong, especially in parts like data preprocessing and the training loop.   <br />
 We also used the debugger in PyCharm to step through the code and see exactly what was happening. Breakpoints made it easy to pause and inspect variables, which was super useful for tracking down tricky issues.  
 For performance, instead of advanced profiling tools, we looked at how long certain steps took by using basic timers like Python’s `time` module. This gave us an idea of which parts of the code were slow and needed improvement, like the data loading process during training.  
 Overall, these simple techniques were enough to debug and optimize most of the issues we faced.
