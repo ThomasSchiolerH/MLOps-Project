@@ -143,7 +143,9 @@ Group 22
 >
 > Answer:
 
---- question 3 fill here ---
+We used the third-party framework scikit-learn (sklearn) in our project. Scikit-learn provided functionality for various stages of our machine learning pipeline. Specifically, in `src/AVM/data.py`, we utilized it for data preprocessing tasks such as splitting datasets into training and testing sets, ensuring an efficient workflow for evaluating our models. In `src/AVM/train2.py` and `src/AVM/train3.py`, we used scikit-learn's tools for model evaluation and metrics, which helped us measure the performance of our models accurately and optimize them further.
+
+The inclusion of scikit-learn in the project significantly contributed to its completion by offering efficient utilities that helped our implementation. Its integration allowed us to focus on building and improving the core functionalities of the project without having to implement preprocessing or evaluation methods from scratch.
 
 ## Coding environment
 
@@ -632,7 +634,15 @@ The choice of Gradio was driven by its simplicity, rapid implementation, and sea
 >
 > Answer:
 
---- question 29 fill here ---
+![MLOps architecture  (1)](https://github.com/user-attachments/assets/d8781f6a-742c-48b6-875e-328f17b72430)
+
+The overall system architecture follows the pipeline introduced in the course that ensures reproducibility, scalability, and automation for machine learning workflows. The figure is displayed above. We started the project using the cookie cutter template and could from there start the local development, where the PyTorch application is set up on a developer's local machine. Here, tools like Weights & Biases (W&B) are used for experiment tracking, while Hydra manages configuration files effectively. DVC (Data Version Control) is employed to handle dataset versioning, ensuring consistency and traceability across environments.
+
+Once development is completed, the codebase is containerized using Docker, with predefined Dockerfiles ensuring that the application’s environment is consistent and portable across different setups, whether local or cloud-based. The source code, configurations, and containerized application are pushed to GitHub, where GitHub Actions automate testing and quality checks using Pytest and Flake8. Any new code push triggers a cloud build pipeline, which further automates deployment steps.
+
+Trained models and datasets are stored in GCP Buckets, ensuring scalability and accessibility. The containerized application is deployed to Google Cloud Run, providing serverless and scalable endpoints. For enhanced machine learning capabilities, Vertex AI is used for hosting and deploying models, enabling efficient processing of predictions.
+
+Users interact with the deployed system through APIs exposed via FastAPI or user-friendly interfaces built with Gradio. These interfaces process user requests and leverage the trained models to deliver predictions seamlessly. Experiment tracking and debugging are made efficient through W&B, providing critical insights into model performance and enabling iterative improvements.
 
 ### Question 30
 
