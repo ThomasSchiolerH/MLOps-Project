@@ -183,7 +183,13 @@ By following these steps, a new team member will have an exact copy of the devel
 >
 > Answer:
 
-We have added integrationtests folder in tests folder and moved api tests there. Also added api load tests in performancetests folder.
+We initialized our project using the Cookiecutter MLOps template, which provided a structured skeleton with directories like src, tests, configs, and data. We adapted the template by populating the src folder with the main project logic, including the AVM package that contains the FastAPI implementation (api.py), PyTorch model (model.py), and feature engineering (data.py).
+
+In the tests folder, we added an integrationtests directory specifically for API tests, such as validating the / and /predict endpoints under various scenarios. Additionally, we created a performancetests folder for load testing with Locust, enabling us to assess the API’s performance under high traffic.
+
+We also customized the configs directory to include a cloudbuild.yaml file for seamless CI/CD integration and modified the dockerfiles folder to align with our deployment on Google Cloud Run.
+
+These deviations from the template allowed us to organize our code effectively for robust testing, scalability, and cloud deployment while adhering to MLOps best practices. The overall structure ensures maintainability and efficient testing for future iterations of the project.
 
 ### Question 6
 
@@ -572,7 +578,11 @@ For ML-specific monitoring, we could use tools such as Evidently AI, which can t
 >
 > Answer:
 
---- question 28 fill here ---
+We implemented a frontend for our API using Gradio. This was done to provide an intuitive and user-friendly interface for interacting with our apartment price prediction model. Instead of requiring users to send JSON payloads through tools like Postman or cURL, the Gradio frontend allows users to input apartment features through a web-based graphical interface, making the model accessible to non-technical stakeholders.
+
+The Gradio interface was integrated directly into our FastAPI application and mounted at the /gradio route. Users can input apartment details such as floor, construction year, area, and more, and receive a nicely formatted output showing the predicted price per square meter and total price in Danish Krone (DKK). This approach simplifies the interaction process while improving usability and accessibility.
+
+The choice of Gradio was driven by its simplicity, rapid implementation, and seamless integration with FastAPI, enabling us to demonstrate the model's capabilities effectively.
 
 ### Question 29
 
