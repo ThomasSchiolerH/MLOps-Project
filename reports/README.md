@@ -374,7 +374,20 @@ These workflows ensure code quality, maintainability, and reliability by validat
 >
 > Answer:
 
---- question 15 fill here ---
+For our project, we developed two Docker images: one for training and one for API/inference deployment.
+
+Training Dockerfile (train.dockerfile):
+This image is designed to handle the training process. It integrates DVC for data versioning and pulls the necessary training data. The training script is executed within the container, and the resulting model artifact is uploaded to a Google Cloud Storage bucket for later use. To build and run the training image:
+docker build -f train.dockerfile -t trainer:latest .
+docker run -v $(pwd):/app trainer:latest.
+
+API/Inference Dockerfile (api.dockerfile):
+This image is used to deploy a FastAPI-based inference service. It packages the API code, dependencies, the trained model, and other required artifacts (e.g., a scaler). The container exposes port 8080 for serving predictions. This allows users to send requests for predictions via the FastAPI endpoint or interact with the Gradio interface. To build and run the API image:
+docker build -f api.dockerfile -t inference:latest .
+docker run -p 8080:8080 inference:latest.
+
+Link to the taining docker file [here](https://github.com/ThomasSchiolerH/MLOps-Project/blob/main/dockerfiles/train.dockerfile)
+Link to the api docker file [here](https://github.com/ThomasSchiolerH/MLOps-Project/blob/main/dockerfiles/api.dockerfile)
 
 ### Question 16
 
