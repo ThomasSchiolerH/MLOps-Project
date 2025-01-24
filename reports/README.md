@@ -143,9 +143,17 @@ Group 22
 >
 > Answer:
 
+
+We used three third-party frameworks not covered in the course: Gradio, LightGBM, and scikit-learn.
+
+We used Gradio to develop a user-friendly frontend for our application. This enabled users to input apartment features through a graphical interface and view predictions in a readable Markdown format. It simplified the process of interacting with the API and made the application accessible to non-technical users.
+
+LightGBM was used to train a high-performance regression model for price prediction. Its speed and ability to handle categorical data efficiently were instrumental in achieving accurate predictions. We leveraged its advanced hyperparameter tuning capabilities to optimize the model's generalization performance.
+
 We used the third-party framework scikit-learn (sklearn) in our project. Scikit-learn provided functionality for various stages of our machine learning pipeline. Specifically, in `src/AVM/data.py`, we utilized it for data preprocessing tasks such as splitting datasets into training and testing sets, ensuring an efficient workflow for evaluating our models. In `src/AVM/train2.py` and `src/AVM/train3.py`, we used scikit-learn's tools for model evaluation and metrics, which helped us measure the performance of our models accurately and optimize them further.
 
-The inclusion of scikit-learn in the project significantly contributed to its completion by offering efficient utilities that helped our implementation. Its integration allowed us to focus on building and improving the core functionalities of the project without having to implement preprocessing or evaluation methods from scratch.
+These frameworks streamlined development, improved performance, and enhanced usability, playing critical roles in successfully completing the project.
+
 
 ## Coding environment
 
@@ -227,7 +235,13 @@ These concepts are vital in larger projects because they improve collaboration, 
 >
 > Answer:
 
-In total, we have implemented 4 tests. Primarily, we are testing the model's ability to load correctly and produce valid predictions, which are critical for ensuring consistent performance. Additionally, we have implemented tests for data pipeline integrity to verify correct preprocessing and data loading. Finally, we have added tests to validate the accuracy metric calculations to ensure they meet the defined criteria for evaluating predictions within different error margins.
+In total, we have implemented 12 tests across different files. These tests cover critical aspects of our application:
+
+Unit Tests: We have 7 unit tests (test_evaluate.py and test_model.py) to validate model functionality, accuracy calculation, forward passes, loss calculation, edge cases, and model initialization.
+Integration Tests: 3 integration tests (integrationtests/test_api.py) ensure the FastAPI endpoints work correctly, including health checks, successful predictions, and error handling for invalid data.
+Performance Tests: 2 performance tests (performancetests/locustfile.py) simulate real-world traffic using Locust to evaluate the API's scalability and response times.
+
+These tests ensure the reliability, correctness, and robustness of our application.
 
 
 ### Question 8
@@ -243,11 +257,11 @@ In total, we have implemented 4 tests. Primarily, we are testing the model's abi
 >
 > Answer:
 
-The total code coverage of our project is 47%, covering key modules such as data processing, model evaluation, and model architecture. While achieving 100% code coverage would indicate that all lines of code are executed during tests, it does not guarantee that the code is free from errors. Code coverage only measures execution, not correctness; untested edge cases, unexpected inputs, and logical flaws may still exist.
+The total code coverage of our tests is 61%, which covers the majority of our core functionalities. While this demonstrates a significant effort in testing key parts of the application, it also highlights areas that need further testing, particularly edge cases and less frequently used code paths.
 
-Even if our code had close to 100% coverage, we would not fully trust it to be error-free. High coverage ensures that tests exercise most parts of the code, but the quality of tests—such as checking boundary conditions, handling unexpected scenarios, and testing business logic—is equally important. Comprehensive testing strategies, including unit tests, integration tests, and exploratory testing, are crucial to ensure robustness and reliability in production.
+Even if our code had 100% coverage, it would not guarantee that the code is error-free. Code coverage measures how much of the code is executed during tests, but it does not evaluate the quality of the tests themselves. For example, tests might not cover edge cases, unexpected input scenarios, or complex interactions between components. Additionally, bugs can arise from issues like incorrect logic, dependencies, or untested third-party libraries, which may not be evident from code coverage alone.
 
-Thus, while our current coverage indicates room for improvement, increasing test coverage with well-thought-out tests will help us build confidence in our system's reliability and correctness.
+Thus, while achieving higher coverage is a good goal, it is equally important to focus on writing meaningful tests that cover a wide variety of scenarios and validate the correctness of the application under different conditions. High coverage combined with robust testing practices leads to more reliable code.
 
 ### Question 9
 
@@ -283,11 +297,11 @@ Using branches and PRs improved collaboration by reducing conflicts, enabling pa
 >
 > Answer:
 
-No, we did not use DVC in our project. During the lectures, we were informed that we should wait before implementing it, and due to some issues, we never started using it. However, we recognize the potential benefits that DVC could have provided in managing our data effectively.
+We did make use of DVC (Data Version Control) in our project by integrating it with a Google Cloud Storage bucket to manage and version our data efficiently. We configured our workflow to pull the data at runtime using DVC within our Docker container instead of during the build process. This approach ensured that our container remained lightweight and avoided unnecessary data storage within the image, allowing us to always work with the latest data without rebuilding the container.
 
-Having version control for data would be beneficial in scenarios where datasets evolve over time, such as when new data is collected, or preprocessing techniques change. DVC allows tracking changes in data similarly to how Git tracks code, ensuring reproducibility and collaboration across different versions of the dataset. This would help avoid inconsistencies, enable rollback to previous data states, and provide a clear audit trail of modifications.
+By using DVC in this way, we maintained consistency across different project stages and ensured reproducibility, as team members could easily access specific dataset versions without manual intervention. Additionally, it improved our development and deployment pipeline by separating data dependencies from code dependencies, which streamlined collaboration and made it easier to experiment with various data preprocessing techniques.
 
-In a machine learning pipeline, using DVC could have helped us streamline data management, avoid storing large files directly in the repository, and ensure that everyone on the team was working with the same version of the dataset. Moving forward, adopting DVC would improve our project's scalability and maintainability by integrating data versioning into our workflow.
+Overall, incorporating DVC into our workflow, alongside Docker, improved traceability, reproducibility, and data integrity, ensuring that our models were trained and tested on the correct data versions throughout the project lifecycle.
 
 
 ### Question 11
@@ -421,8 +435,8 @@ Link to the api docker file [here](https://github.com/ThomasSchiolerH/MLOps-Proj
 > Answer:
 
 When we ran into bugs, we used simple methods like adding `print()` statements to check the flow of the code and inspect variable values. This helped us quickly figure out where things went wrong, especially in parts like data preprocessing and the training loop.   <br />
-We also used the debugger in PyCharm to step through the code and see exactly what was happening. Breakpoints made it easy to pause and inspect variables, which was super useful for tracking down tricky issues.  
-For performance, instead of advanced profiling tools, we looked at how long certain steps took by using basic timers like Python’s `time` module. This gave us an idea of which parts of the code were slow and needed improvement, like the data loading process during training.  
+We also used the debugger in PyCharm to step through the code and see exactly what was happening. Breakpoints made it easy to pause and inspect variables, which was super useful for tracking down tricky issues.
+For performance, instead of advanced profiling tools, we looked at how long certain steps took by using basic timers like Python’s `time` module. This gave us an idea of which parts of the code were slow and needed improvement, like the data loading process during training.
 Overall, these simple techniques were enough to debug and optimize most of the issues we faced.
 
 
@@ -597,7 +611,11 @@ For ML-specific monitoring, we could use tools such as Evidently AI, which can t
 >
 > Answer:
 
---- question 27 fill here ---
+During our project, we focused more on the operational aspects of MLOps rather than training an advanced model, which led to relatively low cloud credit usage, only around 2 dollars. In total, our group spent minimal credits, as we opted for a simple model that met our project goals. Specifically, the highest cost came from Artifact Registry, likely due to storing and managing our containerized applications. Other services, such as Vertex AI and Compute Engine, incurred some costs.
+
+Overall, working in the cloud provided us with valuable experience in managing resources, deploying models, and automating workflows efficiently. The flexibility and scalability of cloud services were beneficial, and we found the pay-as-you-go model cost-effective for our project needs. Looking forward, we plan to continue this project as a hobby, where we intend to train the model further and utilize more cloud credits to explore advanced AI capabilities.
+
+
 
 ### Question 28
 
@@ -680,4 +698,11 @@ To overcome these challenges, we broke the deployment process into smaller steps
 > *We have used ChatGPT to help debug our code. Additionally, we used GitHub Copilot to help write some of our code.*
 > Answer:
 
---- question 31 fill here ---
+Student s214963 was responsible for setting up and managing the cloud infrastructure, including configuring Docker containers, setting up Google Cloud Storage buckets, integrating DVC for data versioning, and managing the training pipeline in the cloud. Additionally, they handled the API development and deployment aspects to ensure seamless interaction with the trained models.
+
+Student s214968 was in charge of data processing and transformation, ensuring the dataset was cleaned and prepared correctly for training. They also implemented continuous integration (CI) pipelines to automate testing and deployment, developed the machine learning models, contributed to frontend development, and ensured comprehensive test coverage for the system components.
+
+Student s214952 focused on debugging the codebase, ensuring smooth execution and identifying potential issues during development and deployment. They were also responsible for running experiments, tracking results systematically, and maintaining configuration files and logging mechanisms to improve reproducibility and traceability of the model training process.
+
+Use of Generative AI:
+We have utilized ChatGPT to assist with debugging and resolving code issues, providing insights into error messages and suggesting optimization techniques. Additionally, we leveraged GitHub Copilot to help accelerate code writing, especially for repetitive tasks such as writing configuration files, API endpoints, and unit tests. These AI tools significantly improved our productivity by offering coding suggestions and explanations, allowing us to focus more on refining our models and infrastructure.
