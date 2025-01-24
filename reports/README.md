@@ -434,10 +434,9 @@ Link to the api docker file [here](https://github.com/ThomasSchiolerH/MLOps-Proj
 >
 > Answer:
 
-When we ran into bugs, we used simple methods like adding `print()` statements to check the flow of the code and inspect variable values. This helped us quickly figure out where things went wrong, especially in parts like data preprocessing and the training loop.   <br />
-We also used the debugger in PyCharm to step through the code and see exactly what was happening. Breakpoints made it easy to pause and inspect variables, which was super useful for tracking down tricky issues.
-For performance, instead of advanced profiling tools, we looked at how long certain steps took by using basic timers like Python’s `time` module. This gave us an idea of which parts of the code were slow and needed improvement, like the data loading process during training.
-Overall, these simple techniques were enough to debug and optimize most of the issues we faced.
+In our project, we utilized Python's built-in debugger (pdb) for debugging purposes. This allowed us to set breakpoints, step through the code interactively, and inspect variables at different execution stages. By using pdb, we could efficiently identify and fix issues in our experiments, ensuring smooth execution of our machine learning pipeline. This approach provided more precision and control compared to traditional print statements, especially when debugging complex functions or workflows.
+
+As for profiling, we did not formally profile our code during the project. While we are confident in the overall performance of the implemented solution, we acknowledge that profiling could reveal optimization opportunities and improve efficiency.
 
 
 ## Working in the cloud
@@ -652,8 +651,7 @@ The choice of Gradio was driven by its simplicity, rapid implementation, and sea
 >
 > Answer:
 
-![MLOps architecture  (1)](https://github.com/user-attachments/assets/d8781f6a-742c-48b6-875e-328f17b72430)
-
+![MLOps architecture ](https://github.com/user-attachments/assets/6012372b-9a9c-4dcd-984d-4a1d2c331176)
 The overall system architecture follows the pipeline introduced in the course that ensures reproducibility, scalability, and automation for machine learning workflows. The figure is displayed above. We started the project using the cookie cutter template and could from there start the local development, where the PyTorch application is set up on a developer's local machine. Here, tools like Weights & Biases (W&B) are used for experiment tracking, while Hydra manages configuration files effectively. DVC (Data Version Control) is employed to handle dataset versioning, ensuring consistency and traceability across environments.
 
 Once development is completed, the codebase is containerized using Docker, with predefined Dockerfiles ensuring that the application’s environment is consistent and portable across different setups, whether local or cloud-based. The source code, configurations, and containerized application are pushed to GitHub, where GitHub Actions automate testing and quality checks using Pytest and Flake8. Any new code push triggers a cloud build pipeline, which further automates deployment steps.
