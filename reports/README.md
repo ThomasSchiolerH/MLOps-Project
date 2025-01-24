@@ -281,11 +281,11 @@ Using branches and PRs improved collaboration by reducing conflicts, enabling pa
 >
 > Answer:
 
-No, we did not use DVC in our project. During the lectures, we were informed that we should wait before implementing it, and due to some issues, we never started using it. However, we recognize the potential benefits that DVC could have provided in managing our data effectively.
+We did make use of DVC (Data Version Control) in our project by integrating it with a Google Cloud Storage bucket to manage and version our data efficiently. We configured our workflow to pull the data at runtime using DVC within our Docker container instead of during the build process. This approach ensured that our container remained lightweight and avoided unnecessary data storage within the image, allowing us to always work with the latest data without rebuilding the container.
 
-Having version control for data would be beneficial in scenarios where datasets evolve over time, such as when new data is collected, or preprocessing techniques change. DVC allows tracking changes in data similarly to how Git tracks code, ensuring reproducibility and collaboration across different versions of the dataset. This would help avoid inconsistencies, enable rollback to previous data states, and provide a clear audit trail of modifications.
+By using DVC in this way, we maintained consistency across different project stages and ensured reproducibility, as team members could easily access specific dataset versions without manual intervention. Additionally, it improved our development and deployment pipeline by separating data dependencies from code dependencies, which streamlined collaboration and made it easier to experiment with various data preprocessing techniques.
 
-In a machine learning pipeline, using DVC could have helped us streamline data management, avoid storing large files directly in the repository, and ensure that everyone on the team was working with the same version of the dataset. Moving forward, adopting DVC would improve our project's scalability and maintainability by integrating data versioning into our workflow.
+Overall, incorporating DVC into our workflow, alongside Docker, improved traceability, reproducibility, and data integrity, ensuring that our models were trained and tested on the correct data versions throughout the project lifecycle.
 
 
 ### Question 11
@@ -670,4 +670,11 @@ To overcome these challenges, we broke the deployment process into smaller steps
 > *We have used ChatGPT to help debug our code. Additionally, we used GitHub Copilot to help write some of our code.*
 > Answer:
 
---- question 31 fill here ---
+Student s214963 was responsible for setting up and managing the cloud infrastructure, including configuring Docker containers, setting up Google Cloud Storage buckets, integrating DVC for data versioning, and managing the training pipeline in the cloud. Additionally, they handled the API development and deployment aspects to ensure seamless interaction with the trained models.
+
+Student s214968 was in charge of data processing and transformation, ensuring the dataset was cleaned and prepared correctly for training. They also implemented continuous integration (CI) pipelines to automate testing and deployment, developed the machine learning models, contributed to frontend development, and ensured comprehensive test coverage for the system components.
+
+Student s214952 focused on debugging the codebase, ensuring smooth execution and identifying potential issues during development and deployment. They were also responsible for running experiments, tracking results systematically, and maintaining configuration files and logging mechanisms to improve reproducibility and traceability of the model training process.
+
+Use of Generative AI:
+We have utilized ChatGPT to assist with debugging and resolving code issues, providing insights into error messages and suggesting optimization techniques. Additionally, we leveraged GitHub Copilot to help accelerate code writing, especially for repetitive tasks such as writing configuration files, API endpoints, and unit tests. These AI tools significantly improved our productivity by offering coding suggestions and explanations, allowing us to focus more on refining our models and infrastructure.
