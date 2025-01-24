@@ -75,10 +75,10 @@ will check the repositories and the code to verify your answers.
 * [x] Write unit tests related to the data part of your code (M16)
 * [x] Write unit tests related to model construction and or model training (M16)
 * [x] Calculate the code coverage (M16)
-* [ ] Get some continuous integration running on the GitHub repository (M17)
-* [ ] Add caching and multi-os/python/pytorch testing to your continuous integration (M17)
-* [ ] Add a linting step to your continuous integration (M17)
-* [ ] Add pre-commit hooks to your version control setup (M18)
+* [x] Get some continuous integration running on the GitHub repository (M17)
+* [x] Add caching and multi-os/python/pytorch testing to your continuous integration (M17)
+* [x] Add a linting step to your continuous integration (M17)
+* [x] Add pre-commit hooks to your version control setup (M18)
 * [ ] Add a continues workflow that triggers when data changes (M19)
 * [ ] Add a continues workflow that triggers when changes to the model registry is made (M19)
 * [x] Create a data storage in GCP Bucket for your data and link this with your data version control setup (M21)
@@ -87,9 +87,9 @@ will check the repositories and the code to verify your answers.
 * [x] Create a FastAPI application that can do inference using your model (M22)
 * [x] Deploy your model in GCP using either Functions or Run as the backend (M23)
 * [ ] Write API tests for your application and setup continues integration for these (M24)
-* [ ] Load test your application (M24)
+* [x] Load test your application (M24)
 * [ ] Create a more specialized ML-deployment API using either ONNX or BentoML, or both (M25)
-* [ ] Create a frontend for your API (M26)
+* [x] Create a frontend for your API (M26)
 
 ### Week 3
 
@@ -183,7 +183,13 @@ By following these steps, a new team member will have an exact copy of the devel
 >
 > Answer:
 
---- question 5 fill here ---
+We initialized our project using the Cookiecutter MLOps template, which provided a structured skeleton with directories like src, tests, configs, and data. We adapted the template by populating the src folder with the main project logic, including the AVM package that contains the FastAPI implementation (api.py), PyTorch model (model.py), and feature engineering (data.py).
+
+In the tests folder, we added an integrationtests directory specifically for API tests, such as validating the / and /predict endpoints under various scenarios. Additionally, we created a performancetests folder for load testing with Locust, enabling us to assess the API’s performance under high traffic.
+
+We also customized the configs directory to include a cloudbuild.yaml file for seamless CI/CD integration and modified the dockerfiles folder to align with our deployment on Google Cloud Run.
+
+These deviations from the template allowed us to organize our code effectively for robust testing, scalability, and cloud deployment while adhering to MLOps best practices. The overall structure ensures maintainability and efficient testing for future iterations of the project.
 
 ### Question 6
 
@@ -198,7 +204,9 @@ By following these steps, a new team member will have an exact copy of the devel
 >
 > Answer:
 
---- question 6 fill here ---
+We implemented several rules for code quality, formatting, typing, and documentation. For linting and formatting, we used Ruff, which ensures adherence to Python style conventions, fixes linting violations, and maintains consistent code formatting. For static type checking, we integrated mypy into our workflows, running it in strict mode to catch potential type-related bugs early in development. Documentation is encouraged through pre-commit hooks like check-docstring-first, ensuring functions and classes include docstrings.
+
+These concepts are vital in larger projects because they improve collaboration, maintainability, and scalability. Code quality rules and consistent formatting prevent stylistic disagreements and reduce merge conflicts. Typing helps detect type mismatches and reduces runtime errors, enabling developers to catch bugs before deployment. Proper documentation aids new contributors in understanding the project, reducing onboarding time and ensuring long-term project viability. For example, mypy ensures that all function arguments and return values are used as intended, preventing issues when integrating modules.
 
 ## Version control
 
@@ -216,6 +224,7 @@ By following these steps, a new team member will have an exact copy of the devel
 > *application but also ... .*
 >
 > Answer:
+
 In total, we have implemented 4 tests. Primarily, we are testing the model's ability to load correctly and produce valid predictions, which are critical for ensuring consistent performance. Additionally, we have implemented tests for data pipeline integrity to verify correct preprocessing and data loading. Finally, we have added tests to validate the accuracy metric calculations to ensure they meet the defined criteria for evaluating predictions within different error margins.
 
 
@@ -294,7 +303,13 @@ In a machine learning pipeline, using DVC could have helped us streamline data m
 >
 > Answer:
 
---- question 11 fill here ---
+Our continuous integration (CI) setup is structured into two workflows: Code Quality and Unit Tests. The Code Quality workflow focuses on linting and static type checking. It uses Ruff to enforce consistent formatting and detect code quality issues, while mypy checks for type correctness in strict mode to catch potential bugs early. This workflow runs on pushes and pull requests to the main branch, ensuring code quality is validated continuously.
+
+The Unit Tests workflow ensures correctness through testing and code coverage analysis. It is configured to run on a matrix of environments, including two operating systems (ubuntu-latest, macos-latest) and two Python versions (3.11, 3.12). This comprehensive setup guarantees compatibility across multiple platforms. The workflow installs dependencies using pip, executes tests with pytest, and generates coverage reports with coverage.
+
+Both workflows leverage GitHub Actions' caching capabilities to optimize performance. For example, pip dependencies are cached based on the hashes of requirements.txt and requirements-dev.txt, reducing installation times. Test artifacts (like .pytest_cache) are also cached to speed up repeated runs. This ensures that our CI pipeline remains efficient and cost-effective, even as the project scales.
+
+These workflows ensure code quality, maintainability, and reliability by validating style, type safety, and correctness at every stage. By automating these processes, we minimize human error and reduce the overhead of manual checks. You can view an example of the Code Quality workflow [here](https://github.com/ThomasSchiolerH/MLOps-Project/blob/main/.github/workflows/test.yml)
 
 ## Running code and tracking experiments
 
@@ -313,7 +328,11 @@ In a machine learning pipeline, using DVC could have helped us streamline data m
 >
 > Answer:
 
---- question 12 fill here ---
+We configured experiments using a YAML file that supports multiple named configurations, making it easy to switch between setups like baseline, large_batch, or high_lr. The script uses argparse to accept --config (name of the desired configuration). <br />
+Example command:<br />
+```python train.py --config baseline``` <br />
+This approach centralizes parameters, ensuring consistent and flexible experimentation.
+
 
 ### Question 13
 
@@ -328,7 +347,12 @@ In a machine learning pipeline, using DVC could have helped us streamline data m
 >
 > Answer:
 
---- question 13 fill here ---
+We ensured reproducibility by using version-controlled YAML configuration files, where all hyperparameters and dataset paths are clearly defined and structured. Each experiment’s configuration is logged, and its outputs (e.g., trained model weights) are saved with unique identifiers in the filenames (e.g., baseline_model.pth). <br />
+To reproduce an experiment: <br />
+    1.	Run the script with the same –config argument. <br />
+    2.	Ensure the datasets and preprocessing steps remain consistent (logged in the same YAML file). <br />
+Additionally, random seeds are set for all experiments to control stochastic processes, ensuring consistent results across runs. These measures ensure no critical details are lost, and experiments are fully reproducible.
+
 
 ### Question 14
 
@@ -345,7 +369,13 @@ In a machine learning pipeline, using DVC could have helped us streamline data m
 >
 > Answer:
 
---- question 14 fill here ---
+![image](https://github.com/user-attachments/assets/521a7b1e-5a3f-442f-890c-5cef85a610d1)
+As seen in the attached image, we tracked several metrics during our experiments in W&B to understand the behavior and performance of our model across different configurations.
+In the first chart, we tracked the progression of epochs for three configurations: high_lr, large_batch, and baseline. This ensures all configurations follow the same number of steps for a fair comparison.
+The second chart shows the training loss over epochs for each configuration. This metric is essential as it helps us understand how well the model is fitting the training data. For instance, the high_lr configuration initially had a rapid decline in training loss but plateaued quickly, which suggests it may have reached its convergence limit earlier.
+The third chart tracks the validation loss over epochs. This metric is critical as it reflects the model's generalization ability to unseen data. While the large_batch configuration showed smoother validation loss compared to baseline and high_lr, the baseline configuration performed the best in terms of minimizing validation loss, indicating better generalization.
+These experiments demonstrate how different hyperparameters affect the training and validation process. W&B’s interactive dashboard allowed us to monitor these metrics in real-time and compare configurations effectively, helping us identify the best-performing setup for our project. This tracking setup makes it easier to fine-tune the model for optimal results.
+
 
 ### Question 15
 
@@ -360,7 +390,20 @@ In a machine learning pipeline, using DVC could have helped us streamline data m
 >
 > Answer:
 
---- question 15 fill here ---
+For our project, we developed two Docker images: one for training and one for API/inference deployment.
+
+Training Dockerfile (train.dockerfile):
+This image is designed to handle the training process. It integrates DVC for data versioning and pulls the necessary training data. The training script is executed within the container, and the resulting model artifact is uploaded to a Google Cloud Storage bucket for later use. To build and run the training image:
+docker build -f train.dockerfile -t trainer:latest .
+docker run -v $(pwd):/app trainer:latest.
+
+API/Inference Dockerfile (api.dockerfile):
+This image is used to deploy a FastAPI-based inference service. It packages the API code, dependencies, the trained model, and other required artifacts (e.g., a scaler). The container exposes port 8080 for serving predictions. This allows users to send requests for predictions via the FastAPI endpoint or interact with the Gradio interface. To build and run the API image:
+docker build -f api.dockerfile -t inference:latest .
+docker run -p 8080:8080 inference:latest.
+
+Link to the taining docker file [here](https://github.com/ThomasSchiolerH/MLOps-Project/blob/main/dockerfiles/train.dockerfile)
+Link to the api docker file [here](https://github.com/ThomasSchiolerH/MLOps-Project/blob/main/dockerfiles/api.dockerfile)
 
 ### Question 16
 
@@ -375,7 +418,11 @@ In a machine learning pipeline, using DVC could have helped us streamline data m
 >
 > Answer:
 
---- question 16 fill here ---
+When we ran into bugs, we used simple methods like adding `print()` statements to check the flow of the code and inspect variable values. This helped us quickly figure out where things went wrong, especially in parts like data preprocessing and the training loop.   <br />
+We also used the debugger in PyCharm to step through the code and see exactly what was happening. Breakpoints made it easy to pause and inspect variables, which was super useful for tracking down tricky issues.  
+For performance, instead of advanced profiling tools, we looked at how long certain steps took by using basic timers like Python’s `time` module. This gave us an idea of which parts of the code were slow and needed improvement, like the data loading process during training.  
+Overall, these simple techniques were enough to debug and optimize most of the issues we faced.
+
 
 ## Working in the cloud
 
@@ -506,19 +553,11 @@ The service responds with a JSON object containing the model’s prediction. Tha
 >
 > Answer:
 
-We did not perform formal unit testing or load testing for our API. However, if we were to do it, we would follow a structured approach using tools like pytest for unit and integration testing, and Locust for load testing.
+For unit testing, we used the pytest framework to verify the functionality of our API endpoints. Key tests included checking the health check (/) endpoint, ensuring that the /predict endpoint returned accurate predictions with valid input, and verifying that appropriate error responses were returned for invalid or missing data. These tests also simulated scenarios such as the model not being loaded to validate the robustness of our API.
 
-For unit and integration testing, we would create a tests/ folder in our project and use the FastAPI test client to simulate API requests. We would verify that the API returns expected status codes and correct responses for various input scenarios. The tests would be run using the command pytest tests/integrationtests/test_apis.py, ensuring our API meets its functional requirements.
-
-For load testing, we would use Locust, which allows simulating concurrent users interacting with our API. We would define test scenarios in a locustfile.py and run the tests locally. 
-
-This would help measure performance metrics such as average response time, the 99th percentile response time, and requests per second, identifying bottlenecks and ensuring the API can handle expected workloads efficiently.
+For load testing, we used Locust, a Python-based performance testing tool. We simulated a ramp-up of 50 users and scaled to a peak of 10,000 users. During the test, the / endpoint handled 39,338 requests with an average response time of 617 ms, and the /predict endpoint handled 118,008 requests with an average response time of 502 ms. No failures were recorded during the test. The 99th percentile response time for /predict was approximately 4.6 seconds, indicating that the service remained stable under heavy load. These results demonstrate that the API can handle significant traffic without degradation, making it suitable for real-world deployment on platforms like Google Cloud Run.
 
 In the future, we would aim to integrate these tests into our CI/CD pipeline to automatically verify functionality and performance after deployment.
-
-
-
-
 
 ### Question 26
 
@@ -572,7 +611,11 @@ For ML-specific monitoring, we could use tools such as Evidently AI, which can t
 >
 > Answer:
 
---- question 28 fill here ---
+We implemented a frontend for our API using Gradio. This was done to provide an intuitive and user-friendly interface for interacting with our apartment price prediction model. Instead of requiring users to send JSON payloads through tools like Postman or cURL, the Gradio frontend allows users to input apartment features through a web-based graphical interface, making the model accessible to non-technical stakeholders.
+
+The Gradio interface was integrated directly into our FastAPI application and mounted at the /gradio route. Users can input apartment details such as floor, construction year, area, and more, and receive a nicely formatted output showing the predicted price per square meter and total price in Danish Krone (DKK). This approach simplifies the interaction process while improving usability and accessibility.
+
+The choice of Gradio was driven by its simplicity, rapid implementation, and seamless integration with FastAPI, enabling us to demonstrate the model's capabilities effectively.
 
 ### Question 29
 
