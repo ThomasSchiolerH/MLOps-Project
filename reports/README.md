@@ -143,15 +143,17 @@ Group 22
 >
 > Answer:
 
+
 We used three third-party frameworks not covered in the course: Gradio, LightGBM, and scikit-learn.
 
 We used Gradio to develop a user-friendly frontend for our application. This enabled users to input apartment features through a graphical interface and view predictions in a readable Markdown format. It simplified the process of interacting with the API and made the application accessible to non-technical users.
 
 LightGBM was used to train a high-performance regression model for price prediction. Its speed and ability to handle categorical data efficiently were instrumental in achieving accurate predictions. We leveraged its advanced hyperparameter tuning capabilities to optimize the model's generalization performance.
 
-scikit-learn was used extensively for preprocessing and data splitting. We utilized its train_test_split for splitting datasets, StandardScaler for feature scaling, and metrics such as mean absolute error (MAE) and root mean squared error (RMSE) for model evaluation. It was also integrated into our data preprocessing pipeline for handling missing values and scaling numeric features.
+We used the third-party framework scikit-learn (sklearn) in our project. Scikit-learn provided functionality for various stages of our machine learning pipeline. Specifically, in `src/AVM/data.py`, we utilized it for data preprocessing tasks such as splitting datasets into training and testing sets, ensuring an efficient workflow for evaluating our models. In `src/AVM/train2.py` and `src/AVM/train3.py`, we used scikit-learn's tools for model evaluation and metrics, which helped us measure the performance of our models accurately and optimize them further.
 
 These frameworks streamlined development, improved performance, and enhanced usability, playing critical roles in successfully completing the project.
+
 
 ## Coding environment
 
@@ -650,7 +652,15 @@ The choice of Gradio was driven by its simplicity, rapid implementation, and sea
 >
 > Answer:
 
---- question 29 fill here ---
+![MLOps architecture  (1)](https://github.com/user-attachments/assets/d8781f6a-742c-48b6-875e-328f17b72430)
+
+The overall system architecture follows the pipeline introduced in the course that ensures reproducibility, scalability, and automation for machine learning workflows. The figure is displayed above. We started the project using the cookie cutter template and could from there start the local development, where the PyTorch application is set up on a developer's local machine. Here, tools like Weights & Biases (W&B) are used for experiment tracking, while Hydra manages configuration files effectively. DVC (Data Version Control) is employed to handle dataset versioning, ensuring consistency and traceability across environments.
+
+Once development is completed, the codebase is containerized using Docker, with predefined Dockerfiles ensuring that the application’s environment is consistent and portable across different setups, whether local or cloud-based. The source code, configurations, and containerized application are pushed to GitHub, where GitHub Actions automate testing and quality checks using Pytest and Flake8. Any new code push triggers a cloud build pipeline, which further automates deployment steps.
+
+Trained models and datasets are stored in GCP Buckets, ensuring scalability and accessibility. The containerized application is deployed to Google Cloud Run, providing serverless and scalable endpoints. For enhanced machine learning capabilities, Vertex AI is used for hosting and deploying models, enabling efficient processing of predictions.
+
+Users interact with the deployed system through APIs exposed via FastAPI or user-friendly interfaces built with Gradio. These interfaces process user requests and leverage the trained models to deliver predictions seamlessly. Experiment tracking and debugging are made efficient through W&B, providing critical insights into model performance and enabling iterative improvements.
 
 ### Question 30
 
