@@ -143,7 +143,15 @@ Group 22
 >
 > Answer:
 
---- question 3 fill here ---
+We used three third-party frameworks not covered in the course: Gradio, LightGBM, and scikit-learn.
+
+We used Gradio to develop a user-friendly frontend for our application. This enabled users to input apartment features through a graphical interface and view predictions in a readable Markdown format. It simplified the process of interacting with the API and made the application accessible to non-technical users.
+
+LightGBM was used to train a high-performance regression model for price prediction. Its speed and ability to handle categorical data efficiently were instrumental in achieving accurate predictions. We leveraged its advanced hyperparameter tuning capabilities to optimize the model's generalization performance.
+
+scikit-learn was used extensively for preprocessing and data splitting. We utilized its train_test_split for splitting datasets, StandardScaler for feature scaling, and metrics such as mean absolute error (MAE) and root mean squared error (RMSE) for model evaluation. It was also integrated into our data preprocessing pipeline for handling missing values and scaling numeric features.
+
+These frameworks streamlined development, improved performance, and enhanced usability, playing critical roles in successfully completing the project.
 
 ## Coding environment
 
