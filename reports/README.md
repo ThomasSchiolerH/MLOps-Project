@@ -57,7 +57,7 @@ will check the repositories and the code to verify your answers.
 * [x] Remember to fill out the `requirements.txt` and `requirements_dev.txt` file with whatever dependencies that you
     are using (M2+M6)
 * [x] Remember to comply with good coding practices (`pep8`) while doing the project (M7)
-* [ ] Do a bit of code typing and remember to document essential parts of your code (M7)
+* [x] Do a bit of code typing and remember to document essential parts of your code (M7)
 * [x] Setup version control for your data or part of your data (M8)
 * [x] Add command line interfaces and project commands to your code where it makes sense (M9)
 * [x] Construct one or multiple docker files for your code (M10)
@@ -129,7 +129,7 @@ Group 22
 >
 > Answer:
 
-*s214963, s214952, s214968*
+s214963, s214952, s214968
 
 ### Question 3
 > **A requirement to the project is that you include a third-party package not covered in the course. What framework**
@@ -144,9 +144,7 @@ Group 22
 > Answer:
 
 
-We used three third-party frameworks not covered in the course: Gradio, LightGBM, and scikit-learn.
-
-We used Gradio to develop a user-friendly frontend for our application. This enabled users to input apartment features through a graphical interface and view predictions in a readable Markdown format. It simplified the process of interacting with the API and made the application accessible to non-technical users.
+We used 2 third-party frameworks not covered in the course: LightGBM, and scikit-learn.
 
 LightGBM was used to train a high-performance regression model for price prediction. Its speed and ability to handle categorical data efficiently were instrumental in achieving accurate predictions. We leveraged its advanced hyperparameter tuning capabilities to optimize the model's generalization performance.
 
@@ -214,7 +212,7 @@ These deviations from the template allowed us to organize our code effectively f
 >
 > Answer:
 
-We implemented several rules for code quality, formatting, typing, and documentation. For linting and formatting, we used Ruff, which ensures adherence to Python style conventions, fixes linting violations, and maintains consistent code formatting. For static type checking, we integrated mypy into our workflows, running it in strict mode to catch potential type-related bugs early in development. Documentation is encouraged through pre-commit hooks like check-docstring-first, ensuring functions and classes include docstrings.
+We implemented several rules for code quality, formatting, typing, and documentation. For linting and formatting, we used Ruff, which ensures adherence to Python style conventions, fixes linting violations, and maintains consistent code formatting. For static type checking, we integrated mypy, to catch potential type-related bugs early in development. Documentation is encouraged through pre-commit hooks like check-docstring-first, ensuring functions and classes include docstrings - this feature has been temporarily removed due to an error that will be fixed in a later version.
 
 These concepts are vital in larger projects because they improve collaboration, maintainability, and scalability. Code quality rules and consistent formatting prevent stylistic disagreements and reduce merge conflicts. Typing helps detect type mismatches and reduces runtime errors, enabling developers to catch bugs before deployment. Proper documentation aids new contributors in understanding the project, reducing onboarding time and ensuring long-term project viability. For example, mypy ensures that all function arguments and return values are used as intended, preventing issues when integrating modules.
 
@@ -319,9 +317,9 @@ Overall, incorporating DVC into our workflow, alongside Docker, improved traceab
 >
 > Answer:
 
-Our continuous integration (CI) setup is structured into two workflows: Code Quality and Unit Tests. The Code Quality workflow focuses on linting and static type checking. It uses Ruff to enforce consistent formatting and detect code quality issues, while mypy checks for type correctness in strict mode to catch potential bugs early. This workflow runs on pushes and pull requests to the main branch, ensuring code quality is validated continuously.
+Our continuous integration (CI) setup is structured into two workflows: Code Quality and Unit Tests. The Code Quality workflow focuses on linting and static type checking. It uses Ruff to enforce consistent formatting and detect code quality issues, while mypy checks for type correctness to catch potential bugs early. This workflow runs on pushes and pull requests to the main branch, ensuring code quality is validated continuously.
 
-The Unit Tests workflow ensures correctness through testing and code coverage analysis. It is configured to run on a matrix of environments, including two operating systems (ubuntu-latest, macos-latest) and two Python versions (3.11, 3.12). This comprehensive setup guarantees compatibility across multiple platforms. The workflow installs dependencies using pip, executes tests with pytest, and generates coverage reports with coverage.
+The Unit Tests workflow ensures correctness through testing and code coverage analysis. It is configured to run on a matrix of environments, including two operating systems (ubuntu-latest, macos-latest) and two Python versions (3.11, 3.12). This setup guarantees compatibility across multiple platforms. The workflow installs dependencies using pip, executes tests with pytest, and generates coverage reports with coverage.
 
 Both workflows leverage GitHub Actions' caching capabilities to optimize performance. For example, pip dependencies are cached based on the hashes of requirements.txt and requirements-dev.txt, reducing installation times. Test artifacts (like .pytest_cache) are also cached to speed up repeated runs. This ensures that our CI pipeline remains efficient and cost-effective, even as the project scales.
 
@@ -454,7 +452,7 @@ As for profiling, we did not formally profile our code during the project. While
 >
 > Answer:
 
-In our project, we utilized several GCP services to streamline the MLOps workflow. Cloud Storage (Bucket) was used to securely store datasets, models, and other artifacts, providing a centralized location for data access across various components. Artifact Registry played a crucial role in storing and managing Docker container images and ML model artifacts. Cloud Build enabled us to automate the build, test, and deployment processes. We leveraged Vertex AI for its end-to-end machine learning capabilities, using it to train and push our models efficiently to a bucket. Cloud Functions provided a serverless environment to execute lightweight tasks. Finally, Cloud Run allowed us to deploy and scale containerized ML inference services with minimal operational overhead, ensuring efficient resource utilization and scalability. Together, these services facilitated a robust, automated, and scalable MLOps pipeline.
+In our project, we used several GCP services to streamline the MLOps workflow. Cloud Storage (Bucket) was used to securely store datasets, models, and other artifacts, providing a centralized location for data access across various components. Artifact Registry played a crucial role in storing and managing Docker container images and ML model artifacts. Cloud Build enabled us to automate the build, test, and deployment processes. We leveraged Vertex AI for its end-to-end machine learning capabilities, using it to train and push our models efficiently to a bucket. Cloud Functions provided a serverless environment to execute lightweight tasks. Finally, Cloud Run allowed us to deploy and scale containerized ML inference services with minimal operational overhead, ensuring efficient resource utilization and scalability. Together, these services facilitated a robust, automated, and scalable MLOps pipeline.
 
 
 ### Question 18
@@ -698,7 +696,7 @@ To overcome these challenges, we broke the deployment process into smaller steps
 
 Student s214963 was responsible for setting up and managing the cloud infrastructure, including configuring Docker containers, setting up Google Cloud Storage buckets, integrating DVC for data versioning, and managing the training pipeline in the cloud. Additionally, they handled the API development and deployment aspects to ensure seamless interaction with the trained models.
 
-Student s214968 was in charge of data processing and transformation, ensuring the dataset was cleaned and prepared correctly for training. They also implemented continuous integration (CI) pipelines to automate testing and deployment, developed the machine learning models, contributed to frontend development, and ensured comprehensive test coverage for the system components.
+Student s214968 was in charge of data processing and transformation, ensuring the dataset was cleaned and prepared correctly for training. They also implemented continuous integration (CI) pipelines to automate testing and deployment, developed the machine learning models, created the frontend, and created tests for all system components.
 
 Student s214952 focused on debugging the codebase, ensuring smooth execution and identifying potential issues during development and deployment. They were also responsible for running experiments, tracking results systematically, and maintaining configuration files and logging mechanisms to improve reproducibility and traceability of the model training process.
 
