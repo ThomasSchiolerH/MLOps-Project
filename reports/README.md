@@ -601,7 +601,11 @@ For ML-specific monitoring, we could use tools such as Evidently AI, which can t
 >
 > Answer:
 
---- question 27 fill here ---
+During our project, we focused more on the operational aspects of MLOps rather than training an advanced model, which led to relatively low cloud credit usage, only around 2 dollars. In total, our group spent minimal credits, as we opted for a simple model that met our project goals. Specifically, the highest cost came from Artifact Registry, likely due to storing and managing our containerized applications. Other services, such as Vertex AI and Compute Engine, incurred some costs.
+
+Overall, working in the cloud provided us with valuable experience in managing resources, deploying models, and automating workflows efficiently. The flexibility and scalability of cloud services were beneficial, and we found the pay-as-you-go model cost-effective for our project needs. Looking forward, we plan to continue this project as a hobby, where we intend to train the model further and utilize more cloud credits to explore advanced AI capabilities.
+
+
 
 ### Question 28
 
